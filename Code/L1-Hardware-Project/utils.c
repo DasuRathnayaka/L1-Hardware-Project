@@ -13,31 +13,34 @@ uint8_t charToInt(char val){
 	return (uint8_t)(val - '0');
 }
 
-int pinMode(char* pin, int mode) {
-	volatile uint8_t *regi;
-	switch(pin[0]) {
+volatile uint8_t* selectRegister(char portChar, volatile uint8_t* A, volatile uint8_t* B, volatile uint8_t* C, volatile uint8_t* D) {
+	switch(portChar) {
 		case 'A':
 			// PORT A
-			regi = &DDRA;
+			return A;
 			break;
 		case 'B':
 			// PORT B
-			regi = &DDRB;
+			return B;
 			break;
 		case 'C':
 			// PORT A
-			regi = &DDRC;
+			return C;
 			break;
 		case 'D':
 			// PORT A
-			regi = &DDRD;
+			return D;
 			break;
 		default:
 			// Error
-			return -1;
+			return NULL;
 	}
-	
+}
+
+int pinMode(char* pin, int mode) {
+	volatile uint8_t *regi = selectRegister(pin[0], &DDRA, &DDRB, &DDRC, &DDRD);
 	uint8_t pinVal = charToInt(pin[1]);
+	
 	if (mode == 0) {
 		*regi &= ~(1 << pinVal);
 	} else {
@@ -48,34 +51,25 @@ int pinMode(char* pin, int mode) {
 
 
 int digitalWrite(char* pin, int level) {
-	volatile uint8_t *regi;
-	switch(pin[0]) {
-		case 'A':
-			// PORT A
-			regi = &PORTA;
-			break;
-		case 'B':
-			// PORT B
-			regi = &PORTB;
-			break;
-		case 'C':
-			// PORT A
-			regi = &PORTC;
-			break;
-		case 'D':
-			// PORT A
-			regi = &PORTD;
-			break;
-		default:
-			// Error
-			return -1;
-	}
-	
+	volatile uint8_t *regi = selectRegister(pin[0], &PORTA, &PORTB, &PORTC, &PORTD);
 	uint8_t pinVal = charToInt(pin[1]);
+	
 	if (level == 1) {
 		*regi |= 1 << pinVal;
 	} else {
 		*regi &= ~(1 << pinVal);
 	}
 	return 0;
+}
+
+int digitalRead(char* pin) {
+	volatile uint8_t *regi = selectRegister(pin[0], &PINA, &PINB, &PINC, &PIND);
+	uint8_t pinVal = charToInt(pin[1]);
+	
+	int val = *regi & (1 << pinVal);
+	if (val == 0) {
+		return 0;
+	} else {
+		return 1;
+	}
 }

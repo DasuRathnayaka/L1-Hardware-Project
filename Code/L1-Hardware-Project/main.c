@@ -16,12 +16,17 @@
 int main(void)
 {
 	pinMode(A1, OUTPUT);
+	pinMode(A2, OUTPUT);
+	pinMode(C1, INPUT);
 	
+	digitalWrite(A2, HIGH);
 	while(1) {
-		digitalWrite(A1, LOW);
-		_delay_ms(1000);
-		digitalWrite(A1, HIGH);
-		_delay_ms(1000);
+		if (digitalRead(C1) == 0) {
+		//if ((PINC & (1 << 1)) == 0) {
+			digitalWrite(A1, HIGH);
+		} else {
+			digitalWrite(A1, LOW);
+		}
 	}
 	return 0;
 }

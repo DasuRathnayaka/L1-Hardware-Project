@@ -50,3 +50,4 @@ char D7[] = "D7";
 
 int pinMode(char* pin, int mode);
 int digitalWrite(char* pin, int level);
+int digitalRead(char* pin);
