@@ -13,20 +13,21 @@
 #include <util/delay.h>
 #include "defines.h"
 
-int main(void)
-{
-	pinMode(A1, OUTPUT);
-	pinMode(A2, OUTPUT);
-	pinMode(C1, INPUT);
+int main(void) {
+	pinMode(A0, INPUT);
 	
-	digitalWrite(A2, HIGH);
+	ADC_int();
+	
+	LCD_Init();
+	LCD_String("Starting...");
+	_delay_ms(50);
+	
 	while(1) {
-		if (digitalRead(C1) == 0) {
-		//if ((PINC & (1 << 1)) == 0) {
-			digitalWrite(A1, HIGH);
-		} else {
-			digitalWrite(A1, LOW);
-		}
+		int val = analogRead(A0);
+		
+		LCD_Int(val);
+		
+		_delay_ms(25);
 	}
 	return 0;
 }

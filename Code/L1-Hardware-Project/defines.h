@@ -51,3 +51,13 @@ char D7[] = "D7";
 int pinMode(char* pin, int mode);
 int digitalWrite(char* pin, int level);
 int digitalRead(char* pin);
+void ADC_int(void);
+int analogRead(char* pin);
+
+void LCD_Command(unsigned char cmnd);
+void LCD_Char(unsigned char data);
+void LCD_Init(void);
+void LCD_String(char *str);
+void LCD_String_xy (char row, char col, char *str);
+void LCD_Clear();
+void LCD_Int(int val);
