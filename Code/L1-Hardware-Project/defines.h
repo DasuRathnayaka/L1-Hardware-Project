@@ -8,6 +8,7 @@
 
 #define INPUT 0
 #define OUTPUT 1
+#define INPUT_PULLUP 2
 
 #define HIGH 1
 #define LOW 0
@@ -48,11 +49,15 @@ char D5[] = "D5";
 char D6[] = "D6";
 char D7[] = "D7";
 
-int pinMode(char* pin, int mode);
-int digitalWrite(char* pin, int level);
-int digitalRead(char* pin);
+int pin_mode(char* pin, int mode);
+int digital_write(char* pin, int level);
+int digital_read(char* pin);
 void ADC_int(void);
-int analogRead(char* pin);
+int ADC_read(char* pin);
+int ADC_read_full(char* pin);
+void PWM_init(void);
+int PWM_write_reg(volatile uint8_t *regi, int level);
+int PWM_write(char* pin, int level);
 
 void LCD_Command(unsigned char cmnd);
 void LCD_Char(unsigned char data);
@@ -61,3 +66,4 @@ void LCD_String(char *str);
 void LCD_String_xy (char row, char col, char *str);
 void LCD_Clear();
 void LCD_Int(int val);
+ 

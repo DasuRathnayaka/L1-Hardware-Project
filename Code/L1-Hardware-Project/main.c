@@ -14,18 +14,20 @@
 #include "defines.h"
 
 int main(void) {
-	pinMode(A0, INPUT);
+	pin_mode(A0, INPUT);
+	pin_mode(D5, OUTPUT);
 	
 	ADC_int();
+	PWM_init();
 	
 	LCD_Init();
 	LCD_String("Starting...");
 	_delay_ms(50);
 	
 	while(1) {
-		int val = analogRead(A0);
-		
+		int val = ADC_read(A0);
 		LCD_Int(val);
+		PWM_write(D5, val);
 		
 		_delay_ms(25);
 	}

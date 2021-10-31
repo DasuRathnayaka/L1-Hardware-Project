@@ -21,10 +21,10 @@ Pin Configuration.
 |RS       | B0          |
 |RW       | GND         |
 |En       | B1          |
-|D4       | D4          |
-|D5       | D5          |
-|D6       | D6          |
-|D7       | D7          |
+|D4       | B4          |
+|D5       | B5          |
+|D6       | B6          |
+|D7       | B7          |
 +---------+-------------+
 
 */
@@ -67,6 +67,7 @@ void LCD_Char(unsigned char data) {
 	_delay_ms(2);
 }
 
+
 void LCD_Init(void) { // LCD Initialize function
 	LCD_Dir = 0xFF; // Make LCD port direction as o/p
 	_delay_ms(20); // LCD Power ON delay always >15ms
@@ -88,6 +89,7 @@ void LCD_String(char *str) { // Send string to LCD function
 	}
 }
 
+
 void LCD_String_xy (char row, char col, char *str) { // Send string to LCD with x, y position
 	if (row == 0 && col<16)
 		LCD_Command((col & 0x0F)|0x80); // Command of first row and required position < 16
@@ -96,15 +98,17 @@ void LCD_String_xy (char row, char col, char *str) { // Send string to LCD with 
 	LCD_String(str); // Call LCD string function
 }
 
+
 void LCD_Clear() {
 	LCD_Command(0x01); // Clear display
 	_delay_ms(2);
 	LCD_Command(0x80); // Cursor at home position
 }
 
+
 void LCD_Int(int val) {
 	char str[16];
-	itoa(val, str, 16);
+	itoa(val, str, 10);
 	LCD_Clear();
 	LCD_String(str);
 }
