@@ -133,18 +133,43 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="display.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="defines.h">
+    <Compile Include="src\defines.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="utils.c">
+    <Compile Include="src\defines.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\sys_init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sys_loop.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\ADC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\digital.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\display.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\PWM.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\basic.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\ultrasonic.c">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src" />
+    <Folder Include="src\utils" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
