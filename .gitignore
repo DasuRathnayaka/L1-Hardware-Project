@@ -1,3 +1,5 @@
 **/.vs
 **/.idea
 **/Debug
+**/Project Backups
+*.workspace
