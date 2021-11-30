@@ -71,9 +71,22 @@ int pin_mode(Pin pin, int mode) {
 	} else if (mode == 1) {
 		*regi |= (1 << pin.pin); // Set pin as Output pin
 	} else if (mode == 2){
-		// Set pin as Input Pull up
+		volatile uint8_t *_regi = select_register(pin.port, &PORTA, &PORTB, &PORTC, &PORTD);
+		*regi &= ~(1 << pin.pin); // Set pin as Input pin
+		*_regi |= (1 << pin.pin); // Set pin as Input Pull up
 	} else {
 		return -1; // Return Error
 	}
 	return 0;
+}
+
+
+unsigned long time_ms() {
+	return timer0_overflow;
+}
+
+unsigned long time_us() {
+	double clock_per_micro_sec = F_CPU / 1000000L;
+	unsigned long time = ((timer0_overflow << 8) + TCNT0) * (64 / clock_per_micro_sec);
+	return time;
 }

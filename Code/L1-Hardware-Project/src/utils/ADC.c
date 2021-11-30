@@ -31,14 +31,14 @@ void ADC_int(void) {
  * Parameter
  *	- pin (string) - Input pin eg: A1, B4
  * Return
- *	- (int) - Value of the pin 0 or 1023.
+ *	- (int) - Value of the pin 0 or 255.
  */
 int ADC_read(Pin pin) {
 	// Change Configuration
 	ADMUX = (1 << ADLAR); // ADC Left Adjust Result; Set to Left-Justified
 	
 	if (pin.port != 'A') { // A port is the only port ADC accessible.
-		return NULL;
+		return 0;
 	}
 	
 	ADMUX &= 0xE0; // Clean multiplexer bits
@@ -68,7 +68,7 @@ int ADC_read(Pin pin) {
  */
 int ADC_read_full(Pin pin) {
 	if (pin.port != 'A') { // A port is the only port ADC accessible.
-		return NULL;
+		return 0;
 	}
 	
 	ADMUX &= 0xE0; // Clean multiplexer bits
