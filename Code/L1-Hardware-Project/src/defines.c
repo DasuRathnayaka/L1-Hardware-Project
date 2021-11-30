@@ -8,6 +8,8 @@
 #include "defines.h"
 
 
+int timer0_overflow = 0;
+
 Pin A0 = {.port = 'A', .pin = 0};
 Pin A1 = {.port = 'A', .pin = 1};
 Pin A2 = {.port = 'A', .pin = 2};
