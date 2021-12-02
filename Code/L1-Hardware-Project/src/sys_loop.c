@@ -13,5 +13,14 @@ void sys_loop(void) {
 	LCD_Int(val);
 	PWM_write(D5, val);
 	
+	//Upeksha's practice code
+	
+	
+	/*
+	 *This is just for the practice sake
+	 */
+	
+	
+	
 	_delay_ms(25);
 }

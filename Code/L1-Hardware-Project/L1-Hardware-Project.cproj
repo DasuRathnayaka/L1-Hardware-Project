@@ -151,6 +151,9 @@
     <Compile Include="src\utils\ADC.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\utils\USART.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\utils\digital.c">
       <SubType>compile</SubType>
     </Compile>
