@@ -151,7 +151,7 @@
     <Compile Include="src\utils\ADC.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\utils\USART.c">
+    <Compile Include="src\utils\UART.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\digital.c">

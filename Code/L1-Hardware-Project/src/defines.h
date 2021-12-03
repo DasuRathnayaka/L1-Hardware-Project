@@ -95,5 +95,11 @@ void LCD_String(char *str);
 void LCD_String_xy (char row, char col, char *str);
 void LCD_Clear();
 void LCD_Int(int val);
+
+//UART
+void UART_init(long USART_BAUDRATE);
+unsigned char UART_RxChar();
+void UART_TxChar(char ch);
+void UART_SendString(char *str);
  
 #endif

@@ -9,18 +9,8 @@
 
 
 void sys_loop(void) {
-	int val = ADC_read(A0);
-	LCD_Int(val);
-	PWM_write(D5, val);
-	
-	//Upeksha's practice code
-	
-	
-	/*
-	 *This is just for the practice sake
-	 */
-	
-	
-	
-	_delay_ms(25);
+	LCD_Init();
+	LCD_String("Upeksha Dilshan");
+	LCD_Clear();
+	UART_init(9600);
 }
