@@ -31,8 +31,6 @@ void UART_init(long USART_BAUDRATE)
 /*
 	To receive data 
 	===============
-	
-	
 */
 unsigned char UART_RxChar()
 {
@@ -43,8 +41,6 @@ unsigned char UART_RxChar()
 /*
 	To Transmit data
 	=================
-	
-	
 */
 void UART_TxChar(char ch)
 {
@@ -55,8 +51,6 @@ void UART_TxChar(char ch)
 /*
 	To send String data
 	===================
-	
-	
 */
 void UART_SendString(char *str)
 {
