@@ -10,14 +10,19 @@
 
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 
-long USART_BAUDRATE = 9600;
+const long USART_BAUDRATE = 9600;
 
 /*
 	To initialize the USART connection between two components
+	=========================================================
+	
+	UCSRB register the most used bits are the RXEN and TXEN
+	UCSRC and the UBRRH share same address. To select the UCSRC we have to give 1 to URSEL else it will write in UBRRH register (because default value is 0).
+	UCSZ0 and UCSZ1 sets the frame size. We have set that to 8 bits in this function 2nd line.
 */
 void UART_init(long USART_BAUDRATE)
 {
-	UCSRB |= (1 << RXEN) | (1 << TXEN);						// Turn on transmission and reception 
+	UCSRB |= (1 << RXEN) | (1 << TXEN);						// Enable USART transmission (of transmitter) and reception (of receiver) 
 	UCSRC |= (1 << URSEL) | (1 << UCSZ0) | (1 << UCSZ1);	// Use 8-bit character sizes 
 	UBRRL = BAUD_PRESCALE;									// Load lower 8-bits of the baud rate value 
 	UBRRH = (BAUD_PRESCALE >> 8);							// Load upper 8-bits
@@ -25,6 +30,9 @@ void UART_init(long USART_BAUDRATE)
 
 /*
 	To receive data 
+	===============
+	
+	
 */
 unsigned char UART_RxChar()
 {
@@ -34,6 +42,9 @@ unsigned char UART_RxChar()
 
 /*
 	To Transmit data
+	=================
+	
+	
 */
 void UART_TxChar(char ch)
 {
@@ -43,6 +54,9 @@ void UART_TxChar(char ch)
 
 /*
 	To send String data
+	===================
+	
+	
 */
 void UART_SendString(char *str)
 {
