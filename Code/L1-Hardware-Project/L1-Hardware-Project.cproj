@@ -163,6 +163,12 @@
     <Compile Include="src\utils\display.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\utils\interrupts.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\motor.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\utils\PWM.c">
       <SubType>compile</SubType>
     </Compile>

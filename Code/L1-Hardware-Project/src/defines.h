@@ -8,12 +8,13 @@
 #ifndef DEFINES_H
 #define DEFINES_H
 
-#define F_CPU 16000000L
+#define F_CPU 8000000UL
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 
 
 typedef struct Pin {
@@ -27,6 +28,10 @@ typedef struct Pin {
 
 #define HIGH 1
 #define LOW 0
+
+
+int timer0_overflow; // Overflow for Timer 1
+
 
 Pin A0;
 Pin A1;
@@ -72,6 +77,8 @@ void sys_loop(void);
 uint8_t char_to_int(char val);
 volatile uint8_t* select_register(char portChar, volatile uint8_t* A, volatile uint8_t* B, volatile uint8_t* C, volatile uint8_t* D);
 int pin_mode(Pin pin, int mode);
+unsigned long time_ms();
+unsigned long time_us();
 
 // Digital utilities
 int digital_write(Pin pin, int level);
@@ -84,7 +91,7 @@ int ADC_read_full(Pin pin);
 
 // PWN
 void PWM_init(void);
-int PWM_write_reg(volatile uint8_t *regi, int level);
+int PWM_write_reg(void *regi, int level);
 int PWM_write(Pin pin, int level);
 
 // Display
