@@ -7,10 +7,7 @@
 
 #include "../defines.h"
 
-
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
-
-const long USART_BAUDRATE = 9600;
 
 /*
 	To initialize the USART connection between two components
