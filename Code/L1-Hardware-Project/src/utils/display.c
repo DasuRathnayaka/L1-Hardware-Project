@@ -48,7 +48,7 @@ void LCD_Command(unsigned char cmnd) {
 	_delay_ms(2);
 }
 
-
+/* To send a single character to the display */
 void LCD_Char(unsigned char data) {
 	LCD_Port = (LCD_Port & 0x0F) | (data & 0xF0); // sending upper nibble
 	LCD_Port |= (1 << RS); // RS=1, data reg.

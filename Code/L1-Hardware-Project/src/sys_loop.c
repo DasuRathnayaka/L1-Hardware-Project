@@ -13,7 +13,7 @@ void sys_loop(void) {
 	//_delay_ms(500000);
 	/*int val = ADC_read(A0);
 	LCD_Int(time_us());*/
-	
+
 	// int val = ADC_read(A0);
 	// LCD_Int(val);
 	/*PWM_write(B3, val);
@@ -36,7 +36,7 @@ void sys_loop(void) {
 	OCR1BL = 0;
 	OCR2 = 0;
 	_delay_ms(1000);
-	
+
 	LCD_Clear();
 	LCD_String("255");
 	OCR0 = 255;
@@ -95,10 +95,10 @@ void sys_loop(void) {
 		}
 	}
 	_delay_ms(10);*/
-	
+
 	// PWM_write_reg(&OCR1A, val);
-	
-	
+
+
 	/*digital_write(C3, HIGH);
 	_delay_ms(500);
 	digital_write(C3, LOW);
