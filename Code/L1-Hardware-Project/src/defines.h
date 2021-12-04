@@ -29,10 +29,6 @@ typedef struct Pin {
 #define HIGH 1
 #define LOW 0
 
-#define PWM0A   9    // Left Forward
-#define PWM0B   11   // Right Forward
-#define DIRA    8    // Left Backward
-#define DIRB    10   // Right Backward
 
 int timer0_overflow; // Overflow for Timer 1
 
