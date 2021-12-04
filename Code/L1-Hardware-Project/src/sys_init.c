@@ -22,6 +22,6 @@ void sys_init(void) {
 	PWM_init();
 	
 	LCD_Init();
-	LCD_String("Starting...");
+	LCD_String("Group - 47");
 	_delay_ms(50);
 }

@@ -9,8 +9,10 @@
 
 int i = 0;
 void sys_loop(void) {
-	int val = ADC_read(A0);
-	LCD_Int(time_us());
+	//LCD_String("Group - 47");
+	//_delay_ms(500000);
+	/*int val = ADC_read(A0);
+	LCD_Int(time_us());*/
 	
 	// int val = ADC_read(A0);
 	// LCD_Int(val);
@@ -18,13 +20,13 @@ void sys_loop(void) {
 	PWM_write(D4, val);
 	PWM_write(D5, val);
 	PWM_write(D7, val);*/
-	OCR0 = val;
+	/*OCR0 = val;
 	OCR1AH = (val * 4) >> 8;
 	OCR1AL = val;
 	OCR1BH = (val * 4) >> 8;
 	OCR1BL = val;
 	OCR2 = val;
-	_delay_ms(100);
+	_delay_ms(100);*/
 	/*LCD_Clear();
 	LCD_String("0");
 	OCR0 = 0;
