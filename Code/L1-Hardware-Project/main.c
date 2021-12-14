@@ -11,7 +11,6 @@
 
 #include "src/defines.h"
 
-
 int main(void) {
 	
 	sys_init();
@@ -21,5 +20,6 @@ int main(void) {
 		sys_loop();
 		
 	}
+	
 	return 0;
 }

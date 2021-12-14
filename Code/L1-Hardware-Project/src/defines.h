@@ -29,10 +29,6 @@ typedef struct Pin {
 #define HIGH 1
 #define LOW 0
 
-#define PWM0A   9    // Left Forward
-#define PWM0B   11   // Right Forward
-#define DIRA    8    // Left Backward
-#define DIRB    10   // Right Backward
 
 int timer0_overflow; // Overflow for Timer 1
 
@@ -106,5 +102,11 @@ void LCD_String(char *str);
 void LCD_String_xy (char row, char col, char *str);
 void LCD_Clear();
 void LCD_Int(int val);
+
+//UART
+void UART_init(long USART_BAUDRATE);
+unsigned char UART_RxChar();
+void UART_TxChar(char ch);
+void UART_SendString(char *str);
  
 #endif
