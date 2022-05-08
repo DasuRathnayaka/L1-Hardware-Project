@@ -27,7 +27,6 @@ volatile uint16_t GGA_Index, CommaCounter;
 
 bool IsItGGAString = false, flag1 = false, flag2 = false;
 
-
 void get_gpstime(){
 	cli();
 	uint8_t time_index=0;
@@ -92,6 +91,7 @@ void get_altitude(uint16_t alt_pointer){
 	Altitude_Buffer[alt_index] = GGA_Buffer[index+1];
 	sei();
 }
+
 void convert_time_to_UTC()
 {
 	unsigned int hour, min, sec;

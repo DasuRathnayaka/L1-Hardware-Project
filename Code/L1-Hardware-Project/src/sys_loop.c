@@ -103,4 +103,33 @@ void sys_loop(void) {
 	_delay_ms(500);
 	digital_write(C3, LOW);
 	_delay_ms(500);*/
+	#define Buffer_Size 150
+	#define degrees_buffer_size 20
+	
+	GGA_Index=0;
+	memset(GGA_Buffer, 0, Buffer_Size);
+	memset(degrees_buffer,0,degrees_buffer_size);
+	
+	LCD_Init();              /* initialize LCD16x2 */
+	_delay_ms(3000);         /* wait for GPS receiver to initialize */
+	UART_init(9600);        /* initialize USART with 9600 baud rate */
+	sei();
+	LCD_Clear();
+	
+	while (1)
+	{
+		_delay_ms(1000);
+		
+		LCD_String_xy(1,0,"Lat: ");
+		get_latitude(GGA_Pointers[0]);   /* Extract Latitude */
+		LCD_String(degrees_buffer);      /* display latitude in degree */
+		memset(degrees_buffer,0,degrees_buffer_size);
+		
+		LCD_String_xy(2,0,"Long: ");
+		get_longitude(GGA_Pointers[2]);  /* Extract Longitude */
+		LCD_String(degrees_buffer);      /* display longitude in degree */
+		memset(degrees_buffer,0,degrees_buffer_size);
+		
+		
+	}
 }
