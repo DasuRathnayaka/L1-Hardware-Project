@@ -91,8 +91,8 @@ int ADC_read_full(Pin pin);
 
 // PWN
 void PWM_init(void);
-int PWM_write_reg(void *regi, int level);
-int PWM_write(Pin pin, int level);
+int PWM_write_reg(void *regi, int dutyCyle);
+int PWM_write(Pin pin, int dutyCyle);
 
 // Display
 void LCD_Command(unsigned char cmnd);
@@ -103,10 +103,18 @@ void LCD_String_xy (char row, char col, char *str);
 void LCD_Clear();
 void LCD_Int(int val);
 
-//UART
+// UART
 void UART_init(long USART_BAUDRATE);
 unsigned char UART_RxChar();
 void UART_TxChar(char ch);
 void UART_SendString(char *str);
  
+// Keypad
+char key_char();
+void key_string(char buffer[], int buff);
+
+// Ultrasonic Sensor
+int ultrazonic_distance(Pin trigPin, Pin echoPin, int timeout);
+unsigned long pulse_in(Pin pin, unsigned long timeout);
+
 #endif
