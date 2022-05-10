@@ -157,6 +157,9 @@
     <Compile Include="src\utils\keypad.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\utils\SPI_Master.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\utils\SPI_Slave.c">
       <SubType>compile</SubType>
     </Compile>
