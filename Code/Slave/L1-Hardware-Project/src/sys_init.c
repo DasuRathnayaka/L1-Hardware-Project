@@ -11,11 +11,14 @@
 void sys_init(void) {
 	pin_mode(A0, INPUT);
 	pin_mode(D5, OUTPUT);
+	pin_mode(D3, OUTPUT);
 	
-	ADC_int();
-	PWM_init();
+	//ADC_int();
+	//PWM_init();
+	SPI_Slave_Init();
 	
-	LCD_Init();
-	LCD_String("Starting...");
-	_delay_ms(50);
+	
+	//LCD_Init();
+	//LCD_String("Starting...");
+	//_delay_ms(50);
 }

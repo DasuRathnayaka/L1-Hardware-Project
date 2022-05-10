@@ -117,4 +117,12 @@ void key_string(char buffer[], int buff);
 int ultrazonic_distance(Pin trigPin, Pin echoPin, int timeout);
 unsigned long pulse_in(Pin pin, unsigned long timeout);
 
+// SPI
+void SPI_Master_Init();
+void SPI_Write(char data);
+char SPI_Read();
+void SPI_Slave_Init();
+char SPI_Receive();
+
+
 #endif
