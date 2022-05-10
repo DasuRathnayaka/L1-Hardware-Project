@@ -3,21 +3,19 @@
  *
  * Created: 11/1/2021 10:33:36 PM
  *  Author: Hansa Jayathilaka
- */ 
+ */
 
 #include "defines.h"
 
 
 void sys_init(void) {
-	sei();  //Enable global interrupt
+	pin_mode(A0, INPUT);
+	pin_mode(D5, OUTPUT);
 	
-	pin_mode(D0, INPUT);
-	pin_mode(C6, OUTPUT);
-	
-	PWM_init();
 	ADC_int();
+	PWM_init();
 	
 	LCD_Init();
-	LCD_String("Group - 47");
+	LCD_String("Starting...");
 	_delay_ms(50);
 }
