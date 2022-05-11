@@ -7,106 +7,78 @@
 
 #include "../defines.h"
 
-/*
 
-Pin Configuration.
-+---------+-------------+
-| Display |    Atmel    | 
-|---------+-------------|
-|VSS      | GND         |
-|VCC      | 5v          |
-|VEE      | 10K Preset  | 
-|RS       | B0          |
-|RW       | GND         |
-|En       | B1          |
-|D4       | B4          |
-|D5       | B5          |
-|D6       | B6          |
-|D7       | B7          |
-+---------+-------------+
-
-*/
-
-#define LCD_Dir  DDRB // Define LCD data port direction
-#define LCD_Port PORTB // Define LCD data port
-#define RS PB0 // Define Register Select pin
-#define EN PB1 // Define Enable signal pin
-
-void LCD_Command(unsigned char cmnd) {
-	LCD_Port = (LCD_Port & 0x0F) | (cmnd & 0xF0); // Sending upper nibble
-	LCD_Port &= ~ (1 << RS); // RS=0, command reg.
-	LCD_Port |= (1 << EN);  // Enable pulse
-	_delay_us(1);
-	LCD_Port &= ~ (1 << EN);
-
-	_delay_us(200);
-
-	LCD_Port = (LCD_Port & 0x0F) | (cmnd << 4); // Sending lower nibble
-	LCD_Port |= (1 << EN);
-	_delay_us(1);
-	LCD_Port &= ~(1 << EN);
-	_delay_ms(2);
+void toggle()
+{
+	I2C_write(TWDR | 0x02);			// Set enable pin 1;  Latching data in to LCD data register using High to Low signal
+	I2C_write(TWDR & ~0x02);		// Set enable pin 0;
 }
 
-/* To send a single character to the display */
-void LCD_Char(unsigned char data) {
-	LCD_Port = (LCD_Port & 0x0F) | (data & 0xF0); // sending upper nibble
-	LCD_Port |= (1 << RS); // RS=1, data reg.
-	LCD_Port |= (1 << EN);
-	_delay_us(1);
-	LCD_Port &= ~ (1 << EN);
-
-	_delay_us(200);
-
-	LCD_Port = (LCD_Port & 0x0F) | (data << 4); // Sending lower nibble
-	LCD_Port |= (1 << EN);
-	_delay_us(1);
-	LCD_Port &= ~ (1 << EN);
-	_delay_ms(2);
+void LCD_cmd_hf(char v1)
+{
+	I2C_write(TWDR & ~0x01);		// Set RS pin to 0; Selecting register as Command register
+	I2C_write(TWDR & 0x0F);			// Clearing the Higher 4 bits
+	I2C_write(TWDR | (v1 & 0xF0));	//----Masking higher 4 bits and sending to LCD
+	toggle();
 }
 
-
-void LCD_Init(void) { // LCD Initialize function
-	LCD_Dir = 0xFF; // Make LCD port direction as o/p
-	_delay_ms(20); // LCD Power ON delay always >15ms
+void LCD_cmd(char v2)
+{
+	I2C_write(TWDR & ~0x01);		//rs = 0; ----Selecting register as command register
+	I2C_write(TWDR & 0x0F);			//----clearing the Higher 4 bits
+	I2C_write(TWDR | (v2 & 0xF0));	//----Masking higher 4 bits and sending to LCD
+	toggle();
 	
-	LCD_Command(0x02); // send for 4 bit initialization of LCD
-	LCD_Command(0x28); // 2 line, 5*7 matrix in 4-bit mode
-	LCD_Command(0x0c); // Display on cursor off
-	LCD_Command(0x06); // Increment cursor (shift cursor to right)
-	LCD_Command(0x01); // Clear display screen
-	_delay_ms(2);
+	I2C_write(TWDR & 0x0F);					//----clearing the Higher 4 bits
+	I2C_write(TWDR | ((v2 & 0x0F) << 4));	//----Masking lower 4 bits and sending to LCD
+	toggle();
 }
 
-
-void LCD_String(char *str) { // Send string to LCD function
-	int i;
-	for(i=0;str[i]!=0;i++) // Send each char of string till the NULL
-	{
-		LCD_Char(str[i]);
-	}
+void LCD_dwr(char v3)
+{
+	I2C_write(TWDR | 0x01);					//rs = 1; ----Selecting register as command register
+	I2C_write(TWDR & 0x0F);				    //----clearing the Higher 4 bits
+	I2C_write(TWDR | (v3 & 0xF0));			//----Masking higher 4 bits and sending to LCD
+	toggle();
+	
+	I2C_write(TWDR & 0x0F);					//----clearing the Higher 4 bits
+	I2C_write(TWDR | ((v3 & 0x0F) << 4));	//----Masking lower 4 bits and sending to LCD
+	toggle();
 }
 
-
-void LCD_String_xy (char row, char col, char *str) { // Send string to LCD with x, y position
-	if (row == 0 && col<16)
-		LCD_Command((col & 0x0F)|0x80); // Command of first row and required position < 16
-	else if (row == 1 && col<16)
-		LCD_Command((col & 0x0F) | 0xC0); // Command of first row and required position < 16
-	LCD_String(str); // Call LCD string function
+void LCD_init()
+{
+	LCD_cmd_hf(0x30);       //-----Sequence for initializing LCD
+	LCD_cmd_hf(0x30);       //-----     "            "              "               "
+	LCD_cmd_hf(0x20);       //-----     "            "              "               "
+	LCD_cmd(0x28);          //-----Selecting 16 x 2 LCD in 4Bit mode
+	LCD_cmd(0x0C);          //-----Display ON Cursor OFF
+	LCD_cmd(0x01);          //-----Clear display
+	LCD_cmd(0x06);          //-----Cursor Auto Increment
+	LCD_cmd(0x80);          //-----1st line 1st location of LCD
 }
 
-
-void LCD_Clear() {
-	LCD_Command(0x01); // Clear display
-	_delay_ms(2);
-	LCD_Command(0x80); // Cursor at home position
+void delay(int ms)
+{
+	int i,j;
+	for(i=0;i<=ms;i++)
+	for(j=0;j<=120;j++);
 }
 
+void LCD_msg(char *c)
+{
+	while(*c != 0)      //----Wait till all String are passed to LCD
+	LCD_dwr(*c++);		//----Send the String to LCD
+}
 
-void LCD_Int(int val) {
-	char str[16];
-	itoa(val, str, 10);
-	LCD_Clear();
-	LCD_String(str);
+void LCD_rig_sh()
+{
+	LCD_cmd(0x1C);      //----Command for right Shift
+	delay(400);
+}
+
+void LCD_lef_sh()
+{
+	LCD_cmd(0x18);      //----Command for Left Shift
+	delay(200);
 }

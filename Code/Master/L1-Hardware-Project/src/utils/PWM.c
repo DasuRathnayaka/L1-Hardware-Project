@@ -35,6 +35,15 @@ void PWM_init(void) {
 	TCCR1B |= (1 << WGM12); // Compare mode
 	TCCR1B |= (0 << CS12) | (0 << CS11) | (1 << CS10); // No pre-scaler
 	ICR1 = 255;
+	
+	// Force compare match
+	TCCR2 = (1 << FOC2);
+	// Timer0 mode selection bit; Normal, CTC, PWM-Phase correct, [Fast PWM]
+	TCCR2 |= (1 << WGM20) | (1 << WGM21);
+	// Output Mode; Disconnected, Reserved, [Non-inverted], Inverted (This is only for Fast PWM)
+	TCCR2 |= (1 << COM21) | (0 << COM20);
+	// Clock Source Select; no pre-scaling
+	TCCR2 |= (0 << CS22) | (1 << CS21) | (1 << CS20);
 }
 
 
