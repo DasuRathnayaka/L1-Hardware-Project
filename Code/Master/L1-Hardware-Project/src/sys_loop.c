@@ -9,9 +9,8 @@
 
 
 void sys_loop(void) {
-	LCD_cmd(0x85);
-	LCD_msg("Welcome");
-	LCD_cmd(0xC0);
-	LCD_msg("Hardware Project");
+	_delay_ms(500);
+	digital_write(B1, HIGH);
+	_delay_ms(500);
+	digital_write(B1, LOW);
 }
-

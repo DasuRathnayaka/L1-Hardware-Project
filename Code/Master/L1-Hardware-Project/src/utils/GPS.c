@@ -92,6 +92,7 @@ void get_altitude(uint16_t alt_pointer){
 	Altitude_Buffer[alt_index] = GGA_Buffer[index+1];
 	sei();
 }
+
 void convert_time_to_UTC()
 {
 	unsigned int hour, min, sec;
