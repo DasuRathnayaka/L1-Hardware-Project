@@ -1,32 +1,24 @@
 /*
- * CFile1.c
- *
- * Created: 12/3/2021 11:57:42 PM
- *  Author: Upeksha
- */ 
+    GPS Information extraction using ATmega16/32 
+	Author : Upeksha Herath
+*/
 
 #include "../defines.h"
-#include <stdbool.h>
 
+#define F_CPU 8000000UL
 #define SREG    _SFR_IO8(0x3f)
 
-void convert_time_to_UTC();
-void convert_to_degrees(char *);
-
-#define Buffer_Size 150
-#define degrees_buffer_size 20
-
-char Latitude_Buffer[15], Longitude_Buffer[15], Time_Buffer[15], Altitude_Buffer[8];
-
-char degrees_buffer[degrees_buffer_size];   /* save latitude or longitude in degree */
-char GGA_Buffer[Buffer_Size];               /* save GGA string */
-uint8_t GGA_Pointers[20];                   /* to store instances of ',' */
-char GGA_CODE[3];
-
-volatile uint16_t GGA_Index, CommaCounter;
-
-bool IsItGGAString = false, flag1 = false, flag2 = false;
-
+#include <avr/io.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+// 
+// void convert_time_to_UTC();
+// void convert_to_degrees(char *);
+// 
 
 void get_gpstime(){
 	cli();
@@ -34,7 +26,6 @@ void get_gpstime(){
 
 	/* parse Time in GGA string stored in buffer */
 	for(uint8_t index = 0;GGA_Buffer[index]!=','; index++){
-		
 		Time_Buffer[time_index] = GGA_Buffer[index];
 		time_index++;
 	}
@@ -96,7 +87,7 @@ void convert_time_to_UTC()
 {
 	unsigned int hour, min, sec;
 	uint32_t Time_value;
-	
+		
 	Time_value = atol(Time_Buffer);       /* convert string to integer */
 	hour = (Time_value / 10000);          /* extract hour from integer */
 	min  = (Time_value % 10000) / 100;    /* extract minute from integer */
@@ -119,10 +110,10 @@ void convert_to_degrees(char *raw){
 	/* convert raw latitude/longitude into degree format */
 	decimal_value = (value/100);
 	degrees       = (int)(decimal_value);
-	temp          = (decimal_value - (int)decimal_value)/0.6;
+	temp          = (decimal_value - (int)decimal_value)/0.6; 
 	position      = (float)degrees + temp;
 	
-	dtostrf(position, 6, 4, degrees_buffer);  /* convert float value into string */
+	dtostrf(position, 6, 4, degrees_buffer);  /* convert float value into string */	
 }
 
 ISR (USART_RXC_vect)

@@ -6,9 +6,14 @@
  */ 
 
 #include "defines.h"
-
+#include <stdbool.h>
 
 int timer0_overflow = 0;
+
+//GPS related 
+bool IsItGGAString = false;
+bool flag1 = false;
+bool flag2 = false;
 
 Pin A0 = {.port = 'A', .pin = 0};
 Pin A1 = {.port = 'A', .pin = 1};

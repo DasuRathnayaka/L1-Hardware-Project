@@ -15,7 +15,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-
+#include <stdbool.h>
 
 typedef struct Pin {
 	uint8_t pin;
@@ -29,9 +29,22 @@ typedef struct Pin {
 #define HIGH 1
 #define LOW 0
 
+//GPS related 
+#define Buffer_Size 150
+#define degrees_buffer_size 20
 
 int timer0_overflow; // Overflow for Timer 1
 
+//GPS related 
+char Latitude_Buffer[15],Longitude_Buffer[15],Time_Buffer[15],Altitude_Buffer[8];
+
+char degrees_buffer[degrees_buffer_size];   /* save latitude or longitude in degree */
+char GGA_Buffer[Buffer_Size];               /* save GGA string  => required */
+uint8_t GGA_Pointers[20];                   /* to store instances of ',' */
+char GGA_CODE[3];
+volatile uint16_t GGA_Index, CommaCounter;
+
+bool IsItGGAString, flag1, flag2;
 
 Pin A0;
 Pin A1;
@@ -116,5 +129,13 @@ void key_string(char buffer[], int buff);
 // Ultrasonic Sensor
 int ultrazonic_distance(Pin trigPin, Pin echoPin, int timeout);
 unsigned long pulse_in(Pin pin, unsigned long timeout);
+
+//GPS module
+void get_gpstime();
+void get_latitude(uint16_t lat_pointer);
+void get_longitude(uint16_t long_pointer);
+void get_altitude(uint16_t alt_pointer);
+void convert_time_to_UTC();
+void convert_to_degrees(char *raw);
 
 #endif

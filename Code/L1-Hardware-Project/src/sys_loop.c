@@ -7,15 +7,28 @@
 
 #include "defines.h"
 
-
 void sys_loop(void) {
-	LCD_Int(ultrazonic_distance(C6, D0, NULL));
+		
+	_delay_ms(1000);
+	LCD_String_xy(1,0,"UTC Time: ");
+	get_gpstime();                   /* Extract Time in UTC */
+	LCD_String(Time_Buffer);
+	LCD_String("  ");
 	
-	// PWM_write_reg(&OCR1A, val);
+	LCD_String_xy(2,0,"Lat: ");
+	get_latitude(GGA_Pointers[0]);   /* Extract Latitude */
+	LCD_String(degrees_buffer);      /* display latitude in degree */
+	memset(degrees_buffer,0,degrees_buffer_size);
+	
+	LCD_String_xy(3,0,"Long: ");
+	get_longitude(GGA_Pointers[2]);  /* Extract Longitude */
+	LCD_String(degrees_buffer);      /* display longitude in degree */
+	memset(degrees_buffer,0,degrees_buffer_size);
+	
+	LCD_String_xy(4,0,"Alt: ");
+	get_altitude(GGA_Pointers[7]);   /* Extract Altitude in meters*/
+	LCD_String(Altitude_Buffer);
 
-
-	/*digital_write(C3, HIGH);
-	_delay_ms(500);
-	digital_write(C3, LOW);*/
-	_delay_ms(500);
+		
+	
 }
