@@ -11,9 +11,10 @@
 void sys_init(void) {
 	pin_mode(D3, INPUT_PULLUP);
 	pin_mode(B1, OUTPUT);
-	SPI_Deselect_Slave(SLAVE_SS_0);
-	SPI_Master_Init();
-	SPI_Select_Slave(SLAVE_SS_0);
+	
+	SPI_deselect_slave(SLAVE_SS_0);
+	SPI_master_init();
+	SPI_select_slave(SLAVE_SS_0);
 	
 	I2C_init();
 	I2C_start();
