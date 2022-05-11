@@ -129,6 +129,9 @@ void SPI_Slave_Init();
 void SPI_Select_Slave(Pin SS);
 void SPI_Deselect_Slave(Pin SS);
 unsigned char SPI_Tranceiver(unsigned char data);
+int SPI_Check_Available();
+unsigned char SPI_Read();
+void SPI_Write(unsigned char data);
 
 // I2C
 void I2C_init();

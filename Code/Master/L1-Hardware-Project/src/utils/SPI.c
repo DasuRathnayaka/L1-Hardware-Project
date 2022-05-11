@@ -18,21 +18,21 @@
  * Return
  *	- None
  */
-void SPI_Master_Init() {
+void SPI_master_init() {
 	pin_mode(SLAVE_SS_0, OUTPUT);		// Set SS pin as output
 	pin_mode(MOSI, OUTPUT);		// Set MOSI pin as output
 	pin_mode(SCK, OUTPUT);		// Set SCK pin as output
 	pin_mode(MISO, INPUT);		// Set MISO pin as output
 	
-	SPCR = 0;
+	SPCR = 0x00;
 	
 	SPCR |= (0 << SPIE);		// Disable interrupt
-	SPCR |= (1 << SPE);			// Enable SPI
 	SPCR |= (0 << DORD);		// Data order list; 0 => MSB transmitted first, 1 => LSB transmitted first
 	SPCR |= (1 << MSTR);		// Set as master; 1 => Master, 0 => Slave
 	SPCR |= (0 << CPOL);		// Clock polarity; 1 => Clock start from logical one, 0=> Clock start from logical zero
 	SPCR |= (0 << CPHA);		// Clock phase; 1 => Data sample on trailing clock edge, 0 => Data sample on the leading clock edge
-	SPCR |= (0 << SPR1) | (0 << SPR0);	// Set clock rate; Fosc/16
+	SPCR |= (0 << SPR1) | (1 << SPR0);	// Set clock rate; Fosc/16
+	SPCR |= (1 << SPE);			// Enable SPI (After configure everything, you can enable SPI. If you try to enable SPI before the configurations, you have to face some errors.)
 	
 	SPSR &= ~(1 << SPI2X);		// No double speed clock rate; 1=> Double speed, 0 => Normal speed
 }
@@ -46,7 +46,7 @@ void SPI_Master_Init() {
  * Return
  *	- None
  */
-void SPI_Slave_Init() {
+void SPI_slave_init() {
 	pin_mode(SLAVE_SS_0, INPUT);		// Set SS pin as output
 	pin_mode(MOSI, INPUT);		// Set MOSI pin as output
 	pin_mode(SCK, INPUT);		// Set SCK pin as output
@@ -55,12 +55,12 @@ void SPI_Slave_Init() {
 	SPCR = 0;
 	
 	SPCR |= (0 << SPIE);		// Disable interrupt
-	SPCR |= (1 << SPE);			// Enable SPI
 	SPCR |= (0 << DORD);		// Data order list; 0 => MSB transmitted first, 1 => LSB transmitted first
 	SPCR |= (0 << MSTR);		// Set as slave; 1 => Master, 0 => Slave
 	SPCR |= (0 << CPOL);		// Clock polarity; 1 => Clock start from logical one, 0=> Clock start from logical zero
 	SPCR |= (0 << CPHA);		// Clock phase; 1 => Data sample on trailing clock edge, 0 => Data sample on the leading clock edge
 	SPCR |= (0 << SPR1) | (1 << SPR0);	// Set clock rate
+	SPCR |= (1 << SPE);			// Enable SPI
 	
 	SPSR &= ~(1 << SPI2X);		// No double speed clock rate; 1=> Double speed, 0 => Normal speed
 }
@@ -74,14 +74,10 @@ void SPI_Slave_Init() {
  * Return
  *	- (unsigned char) - Data to receive
  */
-unsigned char SPI_Tranceiver(unsigned char data) {
+unsigned char SPI_tranceiver(unsigned char data) {
 	SPDR = data;					// Load data into the buffer
-	LCD_cmd(0xC2);
-	LCD_msg("Running...");
 	while(!(SPSR & (1<<SPIF)))		// Wait until transmission complete
-	LCD_cmd(0xC2);
-	LCD_msg("          ");
-	return(SPDR);					// Returned received data
+	return SPDR;					// Returned received data
 }
 
 
@@ -93,8 +89,8 @@ unsigned char SPI_Tranceiver(unsigned char data) {
  * Return
  *	- None
  */
-void SPI_Select_Slave(Pin SS) {
-	digital_write(SS, HIGH);
+void SPI_select_slave(Pin SS) {
+	digital_write(SS, LOW);
 }
 
 
@@ -106,6 +102,23 @@ void SPI_Select_Slave(Pin SS) {
  * Return
  *	- None
  */
-void SPI_Deselect_Slave(Pin SS) {
-	digital_write(SS, LOW);
+void SPI_deselect_slave(Pin SS) {
+	digital_write(SS, HIGH);
+}
+
+
+int SPI_check_available() {
+	return (SPSR & (1<<SPIF)) == 1
+}
+
+unsigned char SPI_read() {
+	return SPDR;	// Returned received data
+}
+
+
+void SPI_write(unsigned char data) {
+	char flush_buffer;
+	SPDR = data;					// Load data into the buffer
+	while(!(SPSR & (1<<SPIF)))		// Wait until transmission complete
+	flush_buffer = SPDR;			// Returned received data
 }
