@@ -115,7 +115,6 @@ unsigned char SPI_read() {
 	return SPDR;	// Returned received data
 }
 
-
 void SPI_write(unsigned char data) {
 	char flush_buffer;
 	SPDR = data;					// Load data into the buffer

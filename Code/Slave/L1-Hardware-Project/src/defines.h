@@ -124,17 +124,20 @@ const Pin SLAVE_SS_0;
 const Pin MOSI;
 const Pin MISO;
 const Pin SCK;
-void SPI_Master_Init();
-void SPI_Slave_Init();
-void SPI_Select_Slave(Pin SS);
-void SPI_Deselect_Slave(Pin SS);
-unsigned char SPI_Tranceiver(unsigned char data);
+void SPI_master_init();
+void SPI_slave_init();
+void SPI_select_slave(Pin SS);
+void SPI_deselect_slave(Pin SS);
+unsigned char SPI_tranceiver(unsigned char data);
+int SPI_check_available();
+unsigned char SPI_read();
+void SPI_write(unsigned char data);
 
 // I2C
 void I2C_init();
 void I2C_start();
 void I2C_stop();
-void I2C_write(char x);
+void I2C_write(unsigned char x);
 char I2C_read();
 
 #endif

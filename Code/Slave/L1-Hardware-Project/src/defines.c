@@ -47,7 +47,7 @@ const Pin D6 = {.port = 'D', .pin = 6};
 const Pin D7 = {.port = 'D', .pin = 7};
 
 
-const Pin SLAVE_SS_0 = {.port = 'B', .pin = 3};
+const Pin SLAVE_SS_0 = {.port = 'B', .pin = 4};
 const Pin MOSI = {.port = 'B', .pin = 5};
 const Pin MISO = {.port = 'B', .pin = 6};
 const Pin SCK = {.port = 'B', .pin = 7};

@@ -29,7 +29,7 @@ void ADC_int(void) {
  * Analog input (0 - 255)
  *
  * Parameter
- *	- pin (string) - Input pin eg: A1, B4
+ *	- pin (Pin) - Input pin eg: A1, B4
  * Return
  *	- (int) - Value of the pin 0 or 255.
  */
@@ -62,7 +62,7 @@ int ADC_read(Pin pin) {
  * Analog input full value (0 - 1023)
  *
  * Parameter
- *	- pin (string) - Input pin eg: A1, B4
+ *	- pin (Pin) - Input pin eg: A1, B4
  * Return
  *	- (int) - Value of the pin 0 or 1023.
  */

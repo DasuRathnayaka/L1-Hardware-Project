@@ -29,7 +29,7 @@ void I2C_stop() {
 
 
 //I2C stop condition
-void I2C_write(char x) {				//Cpn esta funcion se escribe en el bus de TWDR
+void I2C_write(unsigned char x) {
 	TWDR = x;						//Move value to I2C
 	TWCR = (1 << TWINT) | (1 << TWEN);	//Enable I2C and clear interrupt
 	while  ((TWCR &(1 << TWINT)) == 0);
@@ -41,4 +41,9 @@ char I2C_read() {
 	TWCR  = (1 << TWEN) | (1 << TWINT);	//Enable I2C and clear interrupt
 	while ((TWCR & (1 << TWINT)) == 0);	//Read successful with all data received in TWDR
 	return TWDR;
+}
+
+
+void I2C_select_slave(unsigned char address) {
+	
 }
