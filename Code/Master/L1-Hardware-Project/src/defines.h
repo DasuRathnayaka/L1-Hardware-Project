@@ -95,13 +95,15 @@ int PWM_write_reg(void *regi, int dutyCyle);
 int PWM_write(Pin pin, int dutyCyle);
 
 // Display
-void LCD_Command(unsigned char cmnd);
-void LCD_Char(unsigned char data);
-void LCD_Init(void);
-void LCD_String(char *str);
-void LCD_String_xy (char row, char col, char *str);
-void LCD_Clear();
-void LCD_Int(int val);
+void LCD_init();			//----LCD Initializing Function
+void toggle();				//----Latching function of LCD
+void LCD_cmd_hf(char v1);   //----Function to send half byte command to LCD
+void LCD_cmd(char v2);		//----Function to send Command to LCD
+void LCD_dwr(char v3);		//----Function to send data to LCD
+void LCD_msg(char *c);		//----Function to Send String to LCD
+void delay(int ms);			//----Delay function
+void LCD_lef_sh();			//----Left Shifting Function
+void LCD_rig_sh();			//----Right Shifting Function
 
 // UART
 void UART_init(long USART_BAUDRATE);
@@ -123,6 +125,13 @@ void SPI_Write(char data);
 char SPI_Read();
 void SPI_Slave_Init();
 char SPI_Receive();
+
+// I2C
+void I2C_init();
+void I2C_start();
+void I2C_stop();
+void I2C_write(char x);
+char I2C_read();
 
 
 #endif
