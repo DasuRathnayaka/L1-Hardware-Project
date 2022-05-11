@@ -9,25 +9,31 @@
 
 
 void sys_loop(void) {
-	//LCD_Int(ultrazonic_distance(C6, D0, NULL));
+	char B = SPI_Tranceiver(0x10000001);
+	LCD_cmd(0x80);
+	LCD_msg("Temp");
 	
-	// PWM_write_reg(&OCR1A, val);
-
-
-	/*digital_write(C3, HIGH);
-	_delay_ms(500);
-	digital_write(C3, LOW);*/
-	//_delay_ms(500);
-	
-	char B = SPI_Receive();		
-	
-	if (B == '1')
+	if (B == 0)
 	{
-		digital_write(D3,HIGH);
+		digital_write(B0,LOW);
+		digital_write(B1,HIGH);
+		digital_write(B2,LOW);
 	}
 	
-	else 
+	else if (B == 1)
 	{
-		digital_write(D3,LOW);
+		digital_write(B0,LOW);
+		digital_write(B1,LOW);
+		digital_write(B2,HIGH);
+	} else {
+		
+		digital_write(B0,HIGH);
+		digital_write(B1,LOW);
+		digital_write(B2,LOW);
+		char temp[] = "temp";
+		temp[0] = B;
+		LCD_cmd(0x01);
+		LCD_cmd(0x80);
+		LCD_msg("Temp");
 	}
 }

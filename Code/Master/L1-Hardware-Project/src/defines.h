@@ -33,41 +33,41 @@ typedef struct Pin {
 int timer0_overflow; // Overflow for Timer 1
 
 
-Pin A0;
-Pin A1;
-Pin A2;
-Pin A3;
-Pin A4;
-Pin A5;
-Pin A6;
-Pin A7;
+const Pin A0;
+const Pin A1;
+const Pin A2;
+const Pin A3;
+const Pin A4;
+const Pin A5;
+const Pin A6;
+const Pin A7;
 
-Pin B0;
-Pin B1;
-Pin B2;
-Pin B3;
-Pin B4;
-Pin B5;
-Pin B6;
-Pin B7;
+const Pin B0;
+const Pin B1;
+const Pin B2;
+const Pin B3;
+const Pin B4;
+const Pin B5;
+const Pin B6;
+const Pin B7;
 
-Pin C0;
-Pin C1;
-Pin C2;
-Pin C3;
-Pin C4;
-Pin C5;
-Pin C6;
-Pin C7;
+const Pin C0;
+const Pin C1;
+const Pin C2;
+const Pin C3;
+const Pin C4;
+const Pin C5;
+const Pin C6;
+const Pin C7;
 
-Pin D0;
-Pin D1;
-Pin D2;
-Pin D3;
-Pin D4;
-Pin D5;
-Pin D6;
-Pin D7;
+const Pin D0;
+const Pin D1;
+const Pin D2;
+const Pin D3;
+const Pin D4;
+const Pin D5;
+const Pin D6;
+const Pin D7;
 
 // Main initialization and loop
 void sys_init(void);
@@ -120,11 +120,15 @@ int ultrazonic_distance(Pin trigPin, Pin echoPin, int timeout);
 unsigned long pulse_in(Pin pin, unsigned long timeout);
 
 // SPI
+const Pin SLAVE_SS_0;
+const Pin MOSI;
+const Pin MISO;
+const Pin SCK;
 void SPI_Master_Init();
-void SPI_Write(char data);
-char SPI_Read();
 void SPI_Slave_Init();
-char SPI_Receive();
+void SPI_Select_Slave(Pin SS);
+void SPI_Deselect_Slave(Pin SS);
+unsigned char SPI_Tranceiver(unsigned char data);
 
 // I2C
 void I2C_init();
@@ -132,6 +136,5 @@ void I2C_start();
 void I2C_stop();
 void I2C_write(char x);
 char I2C_read();
-
 
 #endif
