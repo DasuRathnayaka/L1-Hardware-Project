@@ -23,11 +23,11 @@ void sys_loop(void) {
 	
 	if (B == '1')
 	{
-		digital_write(D3,HIGH);
+		digital_write(D3,LOW);
 	}
 	
 	else 
 	{
-		digital_write(D3,LOW);
+		digital_write(D3,HIGH);
 	}
 }

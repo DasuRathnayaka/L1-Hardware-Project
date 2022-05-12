@@ -20,9 +20,10 @@ PB0 = XCK/T0
 
 void SPI_Slave_Init()					
 {
-	DDRB &= ~((1<<PB5)|(1<<PB7)|(1<<PB4));  // Make MOSI, SCK, SS as input pins //
-	DDRB |= (1<<PB6);			// Make MISO pin as output pin //
-	SPCR = (1<<SPE);			// Enable SPI in slave mode //
+	DDRB &= ~((1<<PB5)|(1<<PB7)|(1<<PB4));  // Make MOSI, SCK, SS as input pins 
+	DDRB |= (1<<PB6);			// Make MISO pin as output pin 
+	SPCR = (1<<SPE);			// Enable SPI in slave mode 
+	
 }
 
 
@@ -30,10 +31,10 @@ void SPI_Slave_Init()
 Return value = received char data
 */
 
-char SPI_Receive()			// SPI Receive data function //
+char SPI_Receive()			// SPI Receive data function 
 {
-	while(!(SPSR & (1<<SPIF)));	// Wait till reception complete //
-	return(SPDR);			// Return received data //
+	while(!(SPSR & (1<<SPIF)));	// Wait till reception complete 
+	return(SPDR);			// Return received data 
 }
 
 
