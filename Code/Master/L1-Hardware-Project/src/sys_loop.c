@@ -9,28 +9,8 @@
 
 
 void sys_loop(void) {
-	//LCD_Int(ultrazonic_distance(C6, D0, NULL));
-	
-	// PWM_write_reg(&OCR1A, val);
-
-
-	/*digital_write(C3, HIGH);
 	_delay_ms(500);
-	digital_write(C3, LOW);*/
-	//_delay_ms(500);
-	
-	int A = digital_read(D3);
-	if (A == 1)
-	{
-		SPI_Write('1');
-		digital_write(D4,HIGH);
-	}
-    else
-	{
-		SPI_Write('0');
-		digital_write(D4,LOW);
-	}
-	
-	
+	digital_write(B1, HIGH);
+	_delay_ms(500);
+	digital_write(B1, LOW);
 }
-

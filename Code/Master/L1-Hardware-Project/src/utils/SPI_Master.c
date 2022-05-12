@@ -7,42 +7,50 @@
 
 #include "../defines.h"
 
-/* SPI Master Initialization
-PB7 = SCK
-PB6 = MISO
-PB5 = MOSI
-PB4 = SS#
-PB3 = OC0/AIN1
-PB2 = INT2/AIN0
-PB1 = T1
-PB0 = XCK/T0*/
+
 
 void SPI_Master_Init()
 {
-	DDRB |= (1<<PB5) | (1<< PB7) | (1<<PB4); // Make MOSI, SCK, SS as output pin
-    DDRB &= ~(1<<PB6); //Make MISO pin as input pin
-	PORTB |= (1<<PB4); //Make high on SS pin
-	SPCR = (1<<SPE) | (1<<MSTR) | (1<<SPR0); // Enable SPI , Select Master Mode and clock Rate Select as Fosc/16
-	SPSR &= ~(1<<SPI2X); //Disable speed doubler
+	pin_mode(SLAVE_SS_0, OUTPUT);		// Set SS pin as output
+	pin_mode(MOSI, OUTPUT);		// Set MOSI pin as output
+	pin_mode(SCK, OUTPUT);		// Set SCK pin as output
+	pin_mode(MISO, INPUT);		// Set MISO pin as output
+	
+	SPCR = 0;
+	
+	SPCR |= (0 << SPIE);		// Disable interrupt
+	SPCR |= (1 << SPE);			// Enable SPI
+	SPCR |= (0 << DORD);		// Data order list; 0 => MSB transmitted first, 1 => LSB transmitted first
+	SPCR |= (1 << MSTR);		// Set as master; 1 => Master, 0 => Slave
+	SPCR |= (0 << CPOL);		// Clock polarity; 1 => Clock start from logical one, 0=> Clock start from logical zero
+	SPCR |= (0 << CPHA);		// Clock phase; 1 => Data sample on trailing clock edge, 0 => Data sample on the leading clock edge
+	SPCR |= (0 << SPR1) | (1 << SPR0);	// Set clock rate
+	
+	SPSR &= ~(1 << SPI2X);		// No double speed clock rate; 1=> Double speed, 0 => Normal speed
 }
 
-/* SPI write data function
-Note: SPIF flag is cleared by first reading SPSR (with SPIF set) and then accessing SPDR hence flush buffer used here to access SPDR after SPSR read 
- */
 
+/* 
+ * SPI write data
+ * Note: SPIF flag is cleared by first reading SPSR (with SPIF set) and then accessing SPDR hence flush buffer used here to access SPDR after SPSR read 
+ */
 void SPI_Write(char data)		
 {
 	char flush_buffer;
-	SPDR = data;			/* Write data to SPI data register */
-	while(!(SPSR & (1<<SPIF)));	/* Wait till transmission complete */
-	flush_buffer = SPDR;		/* Flush received data */
+	SPDR = data;						// Set data to data register
+	while((SPSR & (1 << SPIF)) == 0);	// Wait until interrupt flag
+	flush_buffer = SPDR;				// Flush received data
 }
-	
-/* SPI Read Function*/ 
-	
+
+
+/*
+ * SPI read data
+ */ 
 char SPI_Read()				/* SPI read data function */
 {
 	SPDR = 0xFF;
-	while(!(SPSR & (1<<SPIF)));	/* Wait till reception complete */
+	while((SPSR & (1 << SPIF)) == 0);	/* Wait till reception complete */
 	return(SPDR);			/* Return received data */
 }
+
+
