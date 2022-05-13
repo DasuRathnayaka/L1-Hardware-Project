@@ -39,7 +39,7 @@ int timer0_overflow; // Overflow for Timer 1
 char Latitude_Buffer[15],Longitude_Buffer[15],Time_Buffer[15],Altitude_Buffer[8];
 
 char degrees_buffer[degrees_buffer_size];   /* save latitude or longitude in degree */
-char GGA_Buffer[Buffer_Size];               /* save GGA string  => required */
+char GGA_Buffer[Buffer_Size];               /* save GGA string */
 uint8_t GGA_Pointers[20];                   /* to store instances of ',' */
 char GGA_CODE[3];
 volatile uint16_t GGA_Index, CommaCounter;

@@ -8,7 +8,7 @@
 #include "defines.h"
 
 void sys_loop(void) {
-		
+
 	_delay_ms(1000);
 	LCD_String_xy(1,0,"UTC Time: ");
 	get_gpstime();                   /* Extract Time in UTC */
