@@ -43,8 +43,8 @@ void SPI_Slave_Init()
 Return value = received char data
 */
 
-char SPI_Receive()			// SPI Receive data function //
+char SPI_Receive()			// SPI Receive data function 
 {
-	while(!(SPSR & (1<<SPIF)));	// Wait till reception complete //
-	return(SPDR);			// Return received data //
+	while(!(SPSR & (1<<SPIF)));	// Wait till reception complete 
+	return(SPDR);			// Return received data 
 }
