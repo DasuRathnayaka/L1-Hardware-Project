@@ -1,24 +1,31 @@
 /*
-    GPS Information extraction using ATmega16/32 
-	Author : Upeksha Herath
-*/
+ * CFile1.c
+ *
+ * Created: 12/3/2021 11:57:42 PM
+ *  Author: Upeksha
+ */ 
 
 #include "../defines.h"
-
-#define BAUD 9600       //BAUDRATE = 9600
-#define F_CPU 8000000UL
-#define SREG	_SFR_IO8(0x3f)
-
-#include <avr/io.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
-#include <util/delay.h>
-#include <avr/interrupt.h>
 
-// void convert_time_to_UTC();
-// void convert_to_degrees(char *);
+#define SREG    _SFR_IO8(0x3f)
+
+void convert_time_to_UTC();
+void convert_to_degrees(char *);
+
+#define Buffer_Size 150
+#define degrees_buffer_size 20
+
+char Latitude_Buffer[15], Longitude_Buffer[15], Time_Buffer[15], Altitude_Buffer[8];
+
+char degrees_buffer[degrees_buffer_size];   /* save latitude or longitude in degree */
+char GGA_Buffer[Buffer_Size];               /* save GGA string */
+uint8_t GGA_Pointers[20];                   /* to store instances of ',' */
+char GGA_CODE[3];
+
+volatile uint16_t GGA_Index, CommaCounter;
+
+bool IsItGGAString = false, flag1 = false, flag2 = false;
 
 
 void get_gpstime(){
@@ -26,7 +33,8 @@ void get_gpstime(){
 	uint8_t time_index=0;
 
 	/* parse Time in GGA string stored in buffer */
-	for(uint8_t index = 0;GGA_Buffer[index]!=','; index++) {
+	for(uint8_t index = 0;GGA_Buffer[index]!=','; index++){
+		
 		Time_Buffer[time_index] = GGA_Buffer[index];
 		time_index++;
 	}
@@ -84,11 +92,12 @@ void get_altitude(uint16_t alt_pointer){
 	Altitude_Buffer[alt_index] = GGA_Buffer[index+1];
 	sei();
 }
+
 void convert_time_to_UTC()
 {
 	unsigned int hour, min, sec;
 	uint32_t Time_value;
-		
+	
 	Time_value = atol(Time_Buffer);       /* convert string to integer */
 	hour = (Time_value / 10000);          /* extract hour from integer */
 	min  = (Time_value % 10000) / 100;    /* extract minute from integer */
@@ -111,9 +120,33 @@ void convert_to_degrees(char *raw){
 	/* convert raw latitude/longitude into degree format */
 	decimal_value = (value/100);
 	degrees       = (int)(decimal_value);
-	temp          = (decimal_value - (int)decimal_value)/0.6; 
+	temp          = (decimal_value - (int)decimal_value)/0.6;
 	position      = (float)degrees + temp;
 	
-	dtostrf(position, 6, 4, degrees_buffer);  /* convert float value into string */	
+	dtostrf(position, 6, 4, degrees_buffer);  /* convert float value into string */
 }
 
+ISR (USART_RXC_vect)
+{
+	uint8_t oldsrg = SREG;
+	cli();
+	char received_char = UDR;
+	
+	if(received_char =='$'){                 /* check for '$' */
+		GGA_Index = 0;
+		CommaCounter = 0;
+		IsItGGAString = false;
+	}
+	else if(IsItGGAString == true){          /* if true save GGA info. into buffer */
+		if(received_char == ',' ) GGA_Pointers[CommaCounter++] = GGA_Index;     /* store instances of ',' in buffer */
+		GGA_Buffer[GGA_Index++] = received_char;
+	}
+	else if(GGA_CODE[0] == 'G' && GGA_CODE[1] == 'G' && GGA_CODE[2] == 'A'){    /* check for GGA string */
+		IsItGGAString = true;
+		GGA_CODE[0] = 0; GGA_CODE[1] = 0; GGA_CODE[2] = 0;
+	}
+	else{
+		GGA_CODE[0] = GGA_CODE[1];  GGA_CODE[1] = GGA_CODE[2]; GGA_CODE[2] = received_char;
+	}
+	SREG = oldsrg;
+}

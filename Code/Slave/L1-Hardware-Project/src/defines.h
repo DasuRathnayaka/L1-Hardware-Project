@@ -15,7 +15,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-#include <stdbool.h>
+
 
 typedef struct Pin {
 	uint8_t pin;
@@ -29,58 +29,49 @@ typedef struct Pin {
 #define HIGH 1
 #define LOW 0
 
-//GPS related 
-#define Buffer_Size 150
-#define degrees_buffer_size 20
+// I2C
+#define MY_ADDRESS 0x20
+#define READ 1
+#define WRITE 0
 
 int timer0_overflow; // Overflow for Timer 1
 
-//GPS related 
-char Latitude_Buffer[15],Longitude_Buffer[15],Time_Buffer[15],Altitude_Buffer[8];
 
-char degrees_buffer[degrees_buffer_size];   /* save latitude or longitude in degree */
-char GGA_Buffer[Buffer_Size];               /* save GGA string */
-uint8_t GGA_Pointers[20];                   /* to store instances of ',' */
-char GGA_CODE[3];
-volatile uint16_t GGA_Index, CommaCounter;
+const Pin A0;
+const Pin A1;
+const Pin A2;
+const Pin A3;
+const Pin A4;
+const Pin A5;
+const Pin A6;
+const Pin A7;
 
-bool IsItGGAString, flag1, flag2;
+const Pin B0;
+const Pin B1;
+const Pin B2;
+const Pin B3;
+const Pin B4;
+const Pin B5;
+const Pin B6;
+const Pin B7;
 
-Pin A0;
-Pin A1;
-Pin A2;
-Pin A3;
-Pin A4;
-Pin A5;
-Pin A6;
-Pin A7;
+const Pin C0;
+const Pin C1;
+const Pin C2;
+const Pin C3;
+const Pin C4;
+const Pin C5;
+const Pin C6;
+const Pin C7;
 
-Pin B0;
-Pin B1;
-Pin B2;
-Pin B3;
-Pin B4;
-Pin B5;
-Pin B6;
-Pin B7;
-
-Pin C0;
-Pin C1;
-Pin C2;
-Pin C3;
-Pin C4;
-Pin C5;
-Pin C6;
-Pin C7;
-
-Pin D0;
-Pin D1;
-Pin D2;
-Pin D3;
-Pin D4;
-Pin D5;
-Pin D6;
-Pin D7;
+const Pin D0;
+const Pin D1;
+const Pin D2;
+const Pin D3;
+const Pin D4;
+const Pin D5;
+const Pin D6;
+const Pin D7;
 
 // Main initialization and loop
 void sys_init(void);
@@ -108,13 +99,12 @@ int PWM_write_reg(void *regi, int dutyCyle);
 int PWM_write(Pin pin, int dutyCyle);
 
 // Display
-void LCD_Command(unsigned char cmnd);
-void LCD_Char(unsigned char data);
-void LCD_Init(void);
-void LCD_String(char *str);
-void LCD_String_xy (char row, char col, char *str);
-void LCD_Clear();
-void LCD_Int(int val);
+void LCD_init();
+void LCD_msg(char *c);
+void LCD_clear_msg(char* c);	
+void LCD_clear();
+void LCD_line_1();
+void LCD_line_2();
 
 // UART
 void UART_init(long USART_BAUDRATE);
@@ -130,12 +120,30 @@ void key_string(char buffer[], int buff);
 int ultrazonic_distance(Pin trigPin, Pin echoPin, int timeout);
 unsigned long pulse_in(Pin pin, unsigned long timeout);
 
-//GPS module
-void get_gpstime();
-void get_latitude(uint16_t lat_pointer);
-void get_longitude(uint16_t long_pointer);
-void get_altitude(uint16_t alt_pointer);
-void convert_time_to_UTC();
-void convert_to_degrees(char *raw);
+// SPI
+const Pin SLAVE_SS_0;
+const Pin MOSI;
+const Pin MISO;
+const Pin SCK;
+void SPI_master_init();
+void SPI_slave_init();
+void SPI_select_slave(Pin SS);
+void SPI_deselect_slave(Pin SS);
+unsigned char SPI_tranceiver(unsigned char data);
+int SPI_check_available();
+unsigned char SPI_read();
+void SPI_write(unsigned char data);
+
+// I2C
+void I2C_master_init();
+void I2C_slave_init(unsigned char address);
+void I2C_start();
+void I2C_stop();
+void I2C_write(unsigned char x);
+void I2C_select_slave(unsigned char address, int mode);
+void I2C_listen(void);
+unsigned char I2C_read();
+void I2C_slave_read_buffer(char* buffer, int length);
+void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 
 #endif

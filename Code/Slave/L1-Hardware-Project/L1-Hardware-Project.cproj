@@ -151,13 +151,16 @@
     <Compile Include="src\utils\ADC.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\utils\Magnetometer.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\utils\GPS.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\utils\I2C.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\utils\keypad.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\SPI.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\UART.c">
