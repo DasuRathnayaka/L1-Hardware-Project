@@ -9,17 +9,14 @@
 
 
 void sys_init(void) {
-	pin_mode(D3, INPUT_PULLUP);
-	pin_mode(B1, OUTPUT);
+	pin_mode(B0, OUTPUT);
+	pin_mode(B4, OUTPUT);
+	pin_mode(D4, OUTPUT);
+	pin_mode(D5, OUTPUT);
+	pin_mode(D7, OUTPUT);
 	
-	SPI_deselect_slave(SLAVE_SS_0);
-	SPI_master_init();
-	SPI_select_slave(SLAVE_SS_0);
+	PWM_init();
 	
-	I2C_init();
-	I2C_start();
-	I2C_write(0x70);
+	I2C_master_init();
 	LCD_init();
-	LCD_cmd(0x80);
-	LCD_msg("Master...");
 }

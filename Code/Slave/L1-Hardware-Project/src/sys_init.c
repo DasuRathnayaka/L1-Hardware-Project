@@ -9,12 +9,14 @@
 
 
 void sys_init(void) {
+	pin_mode(B0, OUTPUT);
+	pin_mode(B1, OUTPUT);
+	
 	SPI_slave_init();
 	
-	I2C_init();
-	I2C_start();
-	I2C_write(0x70);
-	LCD_init();
-	LCD_cmd(0x80);
-	LCD_msg("Slave...");
+	I2C_slave_init(MY_ADDRESS);
+	// I2C_start();
+	
+	// LCD_init();
+	// LCD_clear_msg("Slave...");
 }
