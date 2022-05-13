@@ -4,9 +4,9 @@
 */
 
 #include "../defines.h"
-#define F_CPU 1000000UL   // Clock Speed
+
 #define BAUD 9600       //BAUDRATE = 9600
-/*#define F_CPU 8000000UL*/
+#define F_CPU 8000000UL
 #define SREG	_SFR_IO8(0x3f)
 
 #include <avr/io.h>
