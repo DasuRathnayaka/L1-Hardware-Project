@@ -160,6 +160,27 @@
     <Compile Include="src\utils\keypad.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\utils\nRF24L01\avr_spi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\nRF24L01\avr_spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\nRF24L01\nrf24l01.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\nRF24L01\nrf24l01_config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\nRF24L01\nrf24l01_lib.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\nRF24L01\nrf24l01_reg.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\nRF24L01\spi_config.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\utils\SPI.c">
       <SubType>compile</SubType>
     </Compile>
@@ -191,6 +212,7 @@
   <ItemGroup>
     <Folder Include="src" />
     <Folder Include="src\utils" />
+    <Folder Include="src\utils\nRF24L01" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

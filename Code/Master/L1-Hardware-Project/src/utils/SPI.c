@@ -108,7 +108,7 @@ void SPI_deselect_slave(Pin SS) {
 
 
 int SPI_check_available() {
-	return (SPSR & (1<<SPIF)) == 1
+	return (SPSR & (1<<SPIF)) == 1;
 }
 
 unsigned char SPI_read() {
