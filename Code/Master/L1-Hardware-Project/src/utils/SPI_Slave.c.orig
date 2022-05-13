@@ -20,12 +20,6 @@ PB0 = XCK/T0
 
 void SPI_Slave_Init()					
 {
-<<<<<<< HEAD
-	DDRB &= ~((1<<PB5)|(1<<PB7)|(1<<PB4));  // Make MOSI, SCK, SS as input pins 
-	DDRB |= (1<<PB6);			// Make MISO pin as output pin 
-	SPCR = (1<<SPE);			// Enable SPI in slave mode 
-	
-=======
 	pin_mode(B4, INPUT);		// Set SS pin as output
 	pin_mode(B5, INPUT);		// Set MOSI pin as output
 	pin_mode(B7, INPUT);		// Set SCK pin as output
@@ -42,7 +36,6 @@ void SPI_Slave_Init()
 	SPCR |= (0 << SPR1) | (1 << SPR0);	// Set clock rate
 	
 	SPSR &= ~(1 << SPI2X);		// No double speed clock rate; 1=> Double speed, 0 => Normal speed
->>>>>>> dev
 }
 
 
