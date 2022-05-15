@@ -16,6 +16,7 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <stdbool.h>
+#include <string.h>
 
 typedef struct Pin {
 	uint8_t pin;
@@ -48,6 +49,7 @@ char GGA_Buffer[Buffer_Size];               /* save GGA string */
 uint8_t GGA_Pointers[20];                   /* to store instances of ',' */
 char GGA_CODE[3];
 volatile uint16_t GGA_Index, CommaCounter;
+char values[10];
 
 bool IsItGGAString, flag1, flag2;
 

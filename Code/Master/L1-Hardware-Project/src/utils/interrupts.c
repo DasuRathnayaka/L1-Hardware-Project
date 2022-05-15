@@ -34,7 +34,9 @@ ISR (USART_RXC_vect)
 		GGA_CODE[0] = 0; GGA_CODE[1] = 0; GGA_CODE[2] = 0;
 	}
 	else{
-		GGA_CODE[0] = GGA_CODE[1];  GGA_CODE[1] = GGA_CODE[2]; GGA_CODE[2] = received_char;
+		GGA_CODE[0] = GGA_CODE[1];  
+		GGA_CODE[1] = GGA_CODE[2]; 
+		GGA_CODE[2] = received_char;
 	}
 	SREG = oldsrg;
 }
