@@ -85,6 +85,7 @@ unsigned long time_ms() {
 	return timer0_overflow;
 }
 
+
 unsigned long time_us() {
 	double clock_per_micro_sec = F_CPU / 1000000L;
 	unsigned long time = ((timer0_overflow << 8) + TCNT0) * (64 / clock_per_micro_sec);
