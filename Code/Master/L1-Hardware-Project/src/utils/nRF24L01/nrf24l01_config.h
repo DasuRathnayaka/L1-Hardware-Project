@@ -20,6 +20,7 @@
 #define NRF24L01P_CONFIG_H 
 
 
+
 /******** I/O PIN DEFINITIONS FOR AVR *********/
 
 /* Define which AVR pin is connected to RFM70 Chip Enable (CE) */
@@ -28,6 +29,8 @@
 #define CE_PIN   	1
 
 /**********************************************/
+
+ 
  /* Address of the radio and Address length 
   * example: 
   *	#define NRF_ADDRESS		{0x11, 0x22, 0x33, 0x44, 0x55}
@@ -45,17 +48,17 @@
  */
  #define CONFIG_NRF_AUTOACK_ENABLED 	1
  
- 
+
 /* Whether to enable or disable dynamic payload width
- * Define as 1 to enable, 0 to disable
+ * Define to 1 to enable, 0 to disable
  */
 #define CONFIG_NRF_DYNAMIC_PL_ENABLED		0
+
 
 /* Length of the static payload
  * Define this from 0 to 32 (bytes)
  */
 #define CONFIG_NRF_STATIC_PL_LENGTH			16
-
 
 /* Whether to enable Payload in the ACK
    If defined to 1, also define ACK payload length */
@@ -82,7 +85,8 @@
 #define CONFIG_NRF_DATA_RATE	NRF_RATE_250KBPS
 
 
-/* Define RF channel */
+/* Define RF channel
+ */
 #define CONFIG_NRF_RF_CHANNEL 	40
 
 
