@@ -7,6 +7,9 @@
 
 #include "../defines.h"
 
+void I2C_wait_to_process() {
+	while ((TWCR & (1 << TWINT)) == 0);
+}
 
 /************************************************************************/
 /* Master                                                               */
@@ -88,6 +91,4 @@ void I2C_slave_read_buffer(char* buffer, int length) {
 
 
 
-void I2C_wait_to_process() {
-	while ((TWCR & (1 << TWINT)) == 0);
-}
+

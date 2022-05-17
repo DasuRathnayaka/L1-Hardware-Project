@@ -21,14 +21,12 @@ void sys_init(void) {
 	_delay_ms(50);
 	
 	LCD_init();
-	_delay_ms(3000);         /* wait for GPS receiver to initialize */
+	//_delay_ms(3000);         /* wait for GPS receiver to initialize */
 	UART_init(9600);        /* initialize USART with 9600 baud rate */
 	LCD_clear();
-	char values[20];
-	LCD_line_1();
-	LCD_msg("UTC Time: ");
-	UART_SendString("Upeksha");
-		
+	
+	DDRD = 0xFF;
+	DDRC = 0xFF;	
 }
 
 

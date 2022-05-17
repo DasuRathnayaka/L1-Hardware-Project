@@ -9,10 +9,12 @@
 
 void sys_loop(void) {
 
+	get_latitude();
+	LCD_line_1();
+	LCD_msg("Lati: ");
+	LCD_msg(lati_value);
+	LCD_line_2();
+	LCD_msg("Longi:");
+	LCD_msg(longi_value);									
 
-// 	for (int i = 0; i < 9; i++) {
-// 		values[i] = UART_RxChar();
-// 	}
-/*	LCD_msg(values);*/
-	
 }
