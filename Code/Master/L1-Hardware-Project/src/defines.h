@@ -146,5 +146,10 @@ unsigned char I2C_read();
 void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 
+// Motors
+void setM2Speed(int speed);
+void setM1Speed(int speed);
+void drive(int m1Speed, int m2Speed);
+
 
 #endif

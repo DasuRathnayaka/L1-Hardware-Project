@@ -16,7 +16,12 @@ void sys_init(void) {
 	pin_mode(D7, OUTPUT);
 	
 	PWM_init();
+	ADC_int();
+	SPI_master_init();
+	motor_init();
 	
 	I2C_master_init();
 	LCD_init();
+	LCD_clear_msg("Hello World");
+	_delay_ms(10);
 }
