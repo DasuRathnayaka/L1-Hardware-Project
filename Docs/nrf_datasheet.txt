@@ -1,0 +1,41 @@
+nrf24L01+ Specifications
+**Embedded baseband protocol engine(Enhanced ShockBurst)
+  - Packet communication
+  - manual operation to advanced autonomous protocol operation
+  - reduces system cost by handling all the high speed link layer operations
+
+**Use GFSK modulation 
+  - it has user configurebale parameters like
+      -frequency channel
+      -output power,
+      -air data rate - 250kbps, 1Mbps, 2Mbps
+
+** Internal volatage regulators - high Power Supply Rejection Ratio(PSRR) and a wide power supply range
+
+**Radio 126 RF channels, Common Rx, Tx interface
+
+**Power - Integrated voltage regulator
+        - 1.9 - 3.9V
+
+**Host Interface 
+ - 4 SPI pins
+ - Max 10Mbps
+ - 3 separate 32 bytes TX and RX FIFOs
+ - 5V tolerent inputs
+
+**PA - Power Amplifier - Transmission of a signal 
+  LNA - Low Noise Amplifier - Sensitive Signal Receiver
+
+We can use this legally in almost all countries
+
+** GFSK - Gaussian Frequency Shift Keying
+    
+** RF synthesizer - generate a wide range of high frequencies from a single, typically lower,
+ reference frequency with an internal PLL.
+ The output frequency is controlled by accessing the digital registers in the device through an SPI interface.
+
+** PLL - Phase Locked Loop - 
+
+** FIFO - First in First out 
+
+** It is important to never to keep the nrf is never in TX mode longer than 4ms.
