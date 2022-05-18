@@ -12,14 +12,14 @@
 
 /* 
  *  Example connection layout (CE pin can change)
- * 	nRF			ATmega8
+ * 	nRF			ATmega32
 	-------------------
-	SCK			SCK(PB5)
-	MISO		MISO(PB4)
-	MOSI		MOSI(PB3)
-	CSN			SS#(PB2)
+	SCK			SCK(PB7)
+	MISO		MISO(PB6)
+	MOSI		MOSI(PB5)
+	CSN			SS#(PB4)
 	CE			PB1
-	IRQ			INT1(PD3)
+	IRQ			INT2(PB2)
 	VCC			VCC(3.3V)
 	GND			GND
  */
@@ -110,7 +110,7 @@ static void mcu_init(void)
 	MCUCR &= ~(1 << ISC10);
 	
 	/* Enable INT1 interrupt for  IRQ */
-	GICR |= (1 << INT1);
+	GICR |= (1 << INT2);
 }
 
 /* Reads from a register */
@@ -422,7 +422,7 @@ void nrf_set_ack_payload(uint8_t pipe, uint8_t *buf, uint8_t length)
 
 
 /* ISR for  IRQ */
-ISR(INT1_vect)
+ISR(INT2_vect)
 {
 	uint8_t status;
 	
@@ -441,7 +441,7 @@ ISR(INT1_vect)
 	
 	if(status & STAT_MAX_RT)
 	{
-		/* Maxtimum reties exceeded */
+		/* Maximum reties exceeded */
 		max_retries = true;
 	}
 }
