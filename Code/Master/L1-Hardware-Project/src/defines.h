@@ -159,7 +159,7 @@ void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 
 //GPS module
-/*void get_latitude();*/
+void get_latitude();
 
 
 #endif
