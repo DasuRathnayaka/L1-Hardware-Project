@@ -27,6 +27,14 @@ void sys_init(void) {
 	
 	DDRD = 0xFF;
 	DDRC = 0xFF;	
+	
+	GGA_Index=0;
+	memset(GGA_Buffer, 0, Buffer_Size);
+	memset(degrees_buffer,0,degrees_buffer_size);
+	
+	//GPS 2
+	_delay_ms(3000);         /* wait for GPS receiver to initialize */
+	sei();
 }
 
 

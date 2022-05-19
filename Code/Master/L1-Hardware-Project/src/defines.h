@@ -49,6 +49,22 @@ void usart_init();
 unsigned int usart_getch();
 unsigned char value,i,lati_value[15],lati_dir, longi_value[15], longi_dir ;
 
+//GPS 2 realted 
+#define Buffer_Size 150
+#define degrees_buffer_size 20
+
+char Latitude_Buffer[15],Longitude_Buffer[15],Time_Buffer[15],Altitude_Buffer[8];
+
+char degrees_buffer[degrees_buffer_size];   /* save latitude or longitude in degree */
+char GGA_Buffer[Buffer_Size];               /* save GGA string */
+uint8_t GGA_Pointers[20];                   /* to store instances of ',' */
+char GGA_CODE[3];
+
+volatile uint16_t GGA_Index, CommaCounter;
+
+bool IsItGGAString, flag1, flag2;
+
+
 const Pin A0;
 const Pin A1;
 const Pin A2;
@@ -159,7 +175,14 @@ void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 
 //GPS module
-void get_latitude();
+void display_latitude_longitude();
+void get_latitude(uint16_t lat_pointer);
+void get_gpstime();
+void get_latitude(uint16_t lat_pointer);
+void get_longitude(uint16_t long_pointer);
+void get_altitude(uint16_t alt_pointer);
+void convert_time_to_UTC();
+void convert_to_degrees(char *raw);
 
 
 #endif
