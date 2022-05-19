@@ -41,13 +41,12 @@ typedef struct Pin {
 
 int timer0_overflow; // Overflow for Timer 1
 
-//GPS related
 unsigned char i;		//Max width of the LCD Display.
 #define RATE 250					//Rate of scrolling.
 void WaitMs(unsigned int ms);		//Declaration of delay routine used.
 void usart_init();
 unsigned int usart_getch();
-unsigned char value,i,lati_value[15],lati_dir, longi_value[15], longi_dir ;
+char value,lati_value[15],lati_dir, longi_value[15], longi_dir;
 
 const Pin A0;
 const Pin A1;
@@ -159,7 +158,8 @@ void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 
 //GPS module
-/*void get_latitude();*/
-
+void GPS_init();
+char* get_lati();
+char* get_longitude();
 
 #endif

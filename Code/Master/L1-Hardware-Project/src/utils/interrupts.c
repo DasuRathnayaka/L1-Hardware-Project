@@ -13,4 +13,3 @@ ISR(TIMER0_OVF_vect)
 	timer0_overflow++;  // Get overflowing value.
 }
 
-//GPS module interrupt 
