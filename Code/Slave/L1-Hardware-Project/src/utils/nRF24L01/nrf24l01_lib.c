@@ -249,6 +249,7 @@ static void nrf_set_address(nrf_pipe_t pipe, const uint8_t *addr) {
 }
 
 
+
 /*
  *  Initialize NRF24L01+ radio
  *		Set address
@@ -256,7 +257,7 @@ static void nrf_set_address(nrf_pipe_t pipe, const uint8_t *addr) {
  * 		Set data rate, power, payload length and other things
  *		Set mode to Tx/Rx
  */
-void nrf_init(nrf_opmode_t mode, uint8_t *address) {
+void nrf_init(nrf_opmode_t mode, const uint8_t *address) {
 	uint8_t 	reg_val;
 	
 	/* low level initialization */
@@ -404,12 +405,15 @@ void nrf_set_ack_payload(uint8_t pipe, uint8_t *buf, uint8_t length) {
 
 
 /*
- * Send data from nrf with acknowledgment signal
- * Note:
- *	- Data : up/down + left/right + forward/backward + siren + mode
+ * Send data from nrf
+ up/down
+ left/right
+ forward/backward
+ siren
+ mode
  */
-void nrf_tx_data_with_ACK(uint8_t up_down, uint8_t left_right, uint8_t forward_backward, uint8_t siren, uint8_t auto_manual_mode) {
-	uint8_t data[] = {up_down, left_right, forward_backward, siren, auto_manual_mode};
+void nrf_tx_data(uint8_t up_down, uint8_t left_right, uint8_t forward_backward, uint8_t siren, uint8_t mode) {
+	uint8_t data[] = {up_down, left_right, forward_backward, siren, mode};
 	uint8_t res = nrf_transmit_packet(data, 5);
 	
 	switch (res) {
@@ -430,53 +434,7 @@ void nrf_tx_data_with_ACK(uint8_t up_down, uint8_t left_right, uint8_t forward_b
 
 
 /*
- * Receive data from nrf with acknowledgment signal
- * Return
- *	- 0 : Receive successfully
- *	- -1: Error
- */
-int nrf_rx_data_with_ACK(uint8_t *up_down, uint8_t *left_right, uint8_t *forward_backward, uint8_t *siren, uint8_t *auto_manual_mode) {
-	uint8_t data[5], length;
-	const uint8_t pipe = nrf_receive_packet(data, &length);
-	
-	switch(pipe) {
-		case NRF_PIPE0:
-		case NRF_PIPE1:
-		case NRF_TX_PIPE:  /* With pipe address */
-			LCD_clear_msg("Unexpected Data");
-			return -1;
-		case NRF_TX_PLOAD:			/* With Tx payload */
-			break;
-		case NRF_TX_PLOAD_NOACK:	/* Tx payload with no ACK */
-			LCD_clear_msg("Unexpected Data");
-			return -1;
-		default:
-			LCD_clear_msg("Unexpected Data");
-			return-1;
-	}
-	
-	*up_down = data[0];
-	*left_right = data[1];
-	*forward_backward = data[2];
-	*siren = data[3];
-	*auto_manual_mode = data[4];
-	return 0;
-}
-
-
-/*
- * Send data from nrf with out acknowledgment
- * Note:
- *	- Data : up/down + left/right + forward/backward + siren + mode
- */
-void nrf_tx_data(uint8_t up_down, uint8_t left_right, uint8_t forward_backward, uint8_t siren, uint8_t auto_manual_mode) {
-	uint8_t data[] = {up_down, left_right, forward_backward, siren, auto_manual_mode};
-	nrf_set_ack_payload(NRF_TX_PLOAD_NOACK, data, 5);
-}
-
-
-/*
- * Receive data from nrf with out acknowledgment 
+ * Receive data from nrf
  * Return
  *	- 0 : Receive successfully
  *	- -1: Error

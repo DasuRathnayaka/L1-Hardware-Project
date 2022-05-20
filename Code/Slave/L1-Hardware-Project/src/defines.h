@@ -15,6 +15,15 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <stdbool.h>
+#include <stdarg.h>
+#include <stdint.h>
+
+#include "utils/nRF24L01/spi_config.h"
+#include "utils/nRF24L01/avr_spi.h"
+#include "utils/nRF24L01/nrf24l01_reg.h"
+#include "utils/nRF24L01/nrf24l01_config.h"
+#include "utils/nRF24L01/nrf24l01.h"
 
 
 typedef struct Pin {
@@ -33,6 +42,15 @@ typedef struct Pin {
 #define MY_ADDRESS 0x20
 #define READ 1
 #define WRITE 0
+
+// Mode
+typedef enum {
+	UP_DOWN = 0,
+	LEFT_RIGHT,
+	FORW_BACKW,
+	SIREN,
+	MODE
+} uint8_mode;
 
 int timer0_overflow; // Overflow for Timer 1
 
@@ -145,5 +163,17 @@ void I2C_listen(void);
 unsigned char I2C_read();
 void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
+
+// Button
+void btn_init(void);
+uint8_t btn_mode();
+uint8_t btn_siren();
+
+// Joystick
+void joystick_init(void);
+uint8_t get_joystick_up_down();
+uint8_t get_joystick_left_right();
+uint8_t get_joystick_forward_backward();
+
 
 #endif

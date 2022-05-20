@@ -9,27 +9,17 @@
 
 
 void sys_loop(void) {
-	for(int i = 0; i < 256; i++) {
-		PWM_write(B3, i);
-		_delay_ms(5);
+	uint8_t up_down = get_joystick_up_down();
+	uint8_t left_right = get_joystick_left_right();
+	uint8_t forward_backward = get_joystick_forward_backward();
+	uint8_t siren = btn_siren();
+	uint8_t auto_manual_mode = btn_mode();
+	if (auto_manual_mode == 0) {
+		LCD_line_1();
+		LCD_msg("Auto Mode       ");
+	} else {
+		LCD_line_1();
+		LCD_msg("Manual Mode     ");
 	}
-	for(int i = 0; i < 256; i++) {
-		PWM_write(D4, i);
-		_delay_ms(5);
-	}
-	for(int i = 0; i < 256; i++) {
-		PWM_write(D5, i);
-		_delay_ms(5);
-	}
-	for(int i = 0; i < 256; i++) {
-		PWM_write(D7, i);
-		_delay_ms(5);
-	}
-	
-	LCD_clear_msg("Hello World.");
-	
-	digital_write(B0, HIGH);
-	_delay_ms(1000);
-	digital_write(B0, LOW);
-	_delay_ms(1000);
+	nrf_tx_data(up_down, left_right, forward_backward, siren, auto_manual_mode);
 }
