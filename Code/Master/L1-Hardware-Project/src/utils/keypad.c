@@ -91,8 +91,9 @@ void key_string(char buffer[], int buff) {
 	for(int i = 0; i < buff; i++) {
 		char temp = key_char();
 		if (temp == '=') {
-			buffer[i] == '\0';
+			buffer[i] = '\0';
 			break;
 		}
+		buffer[i] = temp;
 	}
 }

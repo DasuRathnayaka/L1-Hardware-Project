@@ -75,9 +75,9 @@ void SPI_slave_init() {
  *	- (unsigned char) - Data to receive
  */
 unsigned char SPI_tranceiver(unsigned char data) {
-	SPDR = data;					// Load data into the buffer
-	while(!(SPSR & (1<<SPIF)))		// Wait until transmission complete
-	return SPDR;					// Returned received data
+	SPDR = data;						// Load data into the buffer
+	while((SPSR & (1 << SPIF)) == 0);	// Wait until transmission complete
+	return SPDR;						// Returned received data
 }
 
 
@@ -108,7 +108,7 @@ void SPI_deselect_slave(Pin SS) {
 
 
 int SPI_check_available() {
-	return (SPSR & (1<<SPIF)) == 1;
+	return (SPSR & (1 << SPIF)) == 1;
 }
 
 unsigned char SPI_read() {
@@ -118,6 +118,6 @@ unsigned char SPI_read() {
 void SPI_write(unsigned char data) {
 	char flush_buffer;
 	SPDR = data;					// Load data into the buffer
-	while(!(SPSR & (1<<SPIF)))		// Wait until transmission complete
+	while((SPSR & (1<<SPIF)) == 0);	// Wait until transmission complete
 	flush_buffer = SPDR;			// Returned received data
 }

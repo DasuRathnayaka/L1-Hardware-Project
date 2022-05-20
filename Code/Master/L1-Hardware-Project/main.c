@@ -5,10 +5,6 @@
  * Author : Hansa Jayathilaka
  */ 
 
-// #ifdef F_CPU
-// #define F_CPU 16000000L
-// #endif
-
 #include "src/defines.h"
 
 int main(void) {

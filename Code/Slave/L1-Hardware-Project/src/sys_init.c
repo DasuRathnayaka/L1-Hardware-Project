@@ -9,12 +9,26 @@
 
 
 void sys_init(void) {
-	SPI_slave_init();
-	
-	I2C_init();
-	I2C_start();
-	I2C_write(0x70);
+	I2C_master_init();
 	LCD_init();
-	LCD_cmd(0x80);
-	LCD_msg("Slave...");
+	
+	LCD_clear_msg("Group 47");
+	LCD_line_2();
+	LCD_msg("Initializing....");
+	_delay_ms(10);
+	
+	ADC_int();
+	SPI_master_init();
+	
+	
+	nrf_init(NRF_MODE_PTX, NRF_TX_PLOAD);
+	
+	btn_init();
+	
+	joystick_init();
+	
+	
+	LCD_line_2();
+	LCD_msg("Init Completed.");
+	_delay_ms(500);
 }

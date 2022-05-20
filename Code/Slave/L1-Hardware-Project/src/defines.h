@@ -15,6 +15,15 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <stdbool.h>
+#include <stdarg.h>
+#include <stdint.h>
+
+#include "utils/nRF24L01/spi_config.h"
+#include "utils/nRF24L01/avr_spi.h"
+#include "utils/nRF24L01/nrf24l01_reg.h"
+#include "utils/nRF24L01/nrf24l01_config.h"
+#include "utils/nRF24L01/nrf24l01.h"
 
 
 typedef struct Pin {
@@ -29,6 +38,19 @@ typedef struct Pin {
 #define HIGH 1
 #define LOW 0
 
+// I2C
+#define MY_ADDRESS 0x20
+#define READ 1
+#define WRITE 0
+
+// Mode
+typedef enum {
+	UP_DOWN = 0,
+	LEFT_RIGHT,
+	FORW_BACKW,
+	SIREN,
+	MODE
+} uint8_mode;
 
 int timer0_overflow; // Overflow for Timer 1
 
@@ -95,15 +117,12 @@ int PWM_write_reg(void *regi, int dutyCyle);
 int PWM_write(Pin pin, int dutyCyle);
 
 // Display
-void LCD_init();			//----LCD Initializing Function
-void toggle();				//----Latching function of LCD
-void LCD_cmd_hf(char v1);   //----Function to send half byte command to LCD
-void LCD_cmd(char v2);		//----Function to send Command to LCD
-void LCD_dwr(char v3);		//----Function to send data to LCD
-void LCD_msg(char *c);		//----Function to Send String to LCD
-void delay(int ms);			//----Delay function
-void LCD_lef_sh();			//----Left Shifting Function
-void LCD_rig_sh();			//----Right Shifting Function
+void LCD_init();
+void LCD_msg(char *c);
+void LCD_clear_msg(char* c);	
+void LCD_clear();
+void LCD_line_1();
+void LCD_line_2();
 
 // UART
 void UART_init(long USART_BAUDRATE);
@@ -134,10 +153,27 @@ unsigned char SPI_read();
 void SPI_write(unsigned char data);
 
 // I2C
-void I2C_init();
+void I2C_master_init();
+void I2C_slave_init(unsigned char address);
 void I2C_start();
 void I2C_stop();
 void I2C_write(unsigned char x);
-char I2C_read();
+void I2C_select_slave(unsigned char address, int mode);
+void I2C_listen(void);
+unsigned char I2C_read();
+void I2C_slave_read_buffer(char* buffer, int length);
+void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
+
+// Button
+void btn_init(void);
+uint8_t btn_mode();
+uint8_t btn_siren();
+
+// Joystick
+void joystick_init(void);
+uint8_t get_joystick_up_down();
+uint8_t get_joystick_left_right();
+uint8_t get_joystick_forward_backward();
+
 
 #endif
