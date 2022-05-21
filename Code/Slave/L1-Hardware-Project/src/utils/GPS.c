@@ -127,9 +127,9 @@ float get_longi_float() {
 }
 
 /* take the inputed GPS coordinate and value and compare with inputted*/
-float angle_from_north(float lati_input, float longi_input) {
-	float dy = lati_input - get_lati_float();
-	float dx = cos(PI / 180 * get_lati_float()) * (longi_input - get_longi_float());
+float angle_from_north(Coordinate dest) {
+	float dy = dest.latitude - get_lati_float();
+	float dx = cos(PI / 180 * get_lati_float()) * (dest.longitude - get_longi_float());
 	float angle = dy / dx;
 	return angle;
 }

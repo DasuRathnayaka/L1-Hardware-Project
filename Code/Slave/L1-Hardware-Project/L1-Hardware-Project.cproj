@@ -166,6 +166,9 @@
     <Compile Include="src\utils\keypad.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\utils\magnetometer.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\utils\nRF24L01\avr_spi.c">
       <SubType>compile</SubType>
     </Compile>

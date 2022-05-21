@@ -2,7 +2,7 @@
  * ADC.c
  *
  * Created: 11/1/2021 10:08:54 PM
- *  Author: Hansa Jayathilaka
+ *  Author: Binari Dissanayake, Dasuni Rathnayaka
  */ 
 
 #include "../defines.h"

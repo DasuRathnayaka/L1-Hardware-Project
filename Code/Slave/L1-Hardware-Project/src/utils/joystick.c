@@ -2,7 +2,7 @@
  * joystick.c
  *
  * Created: 5/18/2022 7:53:34 PM
- *  Author: Hansa Jayathilaka
+ *  Author: Binari Dissanayake, Dasuni Rathnayaka
  */ 
 
 #include "../defines.h"
