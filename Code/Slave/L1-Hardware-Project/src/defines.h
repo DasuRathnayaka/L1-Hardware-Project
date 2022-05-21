@@ -2,7 +2,7 @@
  * pins.h
  *
  * Created: 10/19/2021 2:04:21 PM
- *  Author: Hansa Jayathilaka
+ * 
  */ 
 
 #ifndef DEFINES_H
@@ -195,7 +195,7 @@ char* get_lati_str();
 char* get_longi_str();
 int get_lati_float();
 int get_longi_float();
-int angle_from_north(float lati_input, float longi_input);
+float angle_from_north(Coordinate dest);
 char* itoa(int num, char* buffer, int base);
 void Double2String(char *output,double val,int n);
 char c[15];

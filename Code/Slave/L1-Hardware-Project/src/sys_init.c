@@ -2,7 +2,7 @@
  * sys_init.c
  *
  * Created: 11/1/2021 10:33:36 PM
- *  Author: Hansa Jayathilaka
+ * 
  */
 
 #include "defines.h"
@@ -17,7 +17,7 @@ void sys_init(void) {
 	LCD_msg("Initializing....");
 	_delay_ms(10);
 	
-	// Sairen
+	// Siren
 	pin_mode(B0, OUTPUT);
 	
 	ADC_int();
@@ -27,6 +27,8 @@ void sys_init(void) {
 	SPI_master_init();
 	
 	ultrazonic_init();
+	
+	Magneto_init();
 	
 	UART_init(9600);
 	UART_SendString("Starting...");

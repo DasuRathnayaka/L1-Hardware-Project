@@ -2,7 +2,7 @@
  * defines.c
  *
  * Created: 11/1/2021 11:46:25 PM
- *  Author: Hansa Jayathilaka
+ * 
  */ 
 
 #include "defines.h"

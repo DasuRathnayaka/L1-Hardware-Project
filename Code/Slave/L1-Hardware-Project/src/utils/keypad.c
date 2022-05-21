@@ -2,7 +2,7 @@
  * keypad.c
  *
  * Created: 12/4/2021 3:50:40 PM
- *  Author: Hansa Jayathilaka
+ *  Author: Dasuni Rathnayaka
  */
 
 #include "../defines.h"

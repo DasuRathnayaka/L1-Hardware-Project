@@ -2,7 +2,7 @@
  * I2C.c
  *
  * Created: 5/10/2022 8:59:24 PM
- *  Author: Hansa Jayathilaka
+ *  Author: Hansa Jayathilaka, Upeksha Herath
  */ 
 
 #include "../defines.h"

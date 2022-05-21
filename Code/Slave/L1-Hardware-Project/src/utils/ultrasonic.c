@@ -2,7 +2,7 @@
  * ultrasonic.c
  *
  * Created: 11/1/2021 10:49:53 PM
- *  Author: Hansa Jayathilaka
+ *  Author: Binari Dissanayake
  */ 
 
 #include "../defines.h"
@@ -14,7 +14,6 @@
 #define mux2 C5
 
 int found = 0;
-int kp = 10;
 
 
 void ultrazonic_init() {
@@ -38,7 +37,7 @@ int ultrazonic_error() {
 	digital_write(mux1, LOW);
 	digital_write(mux2, LOW);
 	
-	int error = (right - left) * kp;
+	int error = right - left;
 	
 	return error;
 }
