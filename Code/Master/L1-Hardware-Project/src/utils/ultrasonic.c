@@ -8,7 +8,7 @@
 #include "../defines.h"
 
 
-int ultrazonic_distance(Pin trigPin, Pin echoPin, int timeout) {
+int ultrazonic_distance(Pin trigPin, Pin echoPin, unsigned long timeout) {
 	if (timeout == NULL) timeout = 500000;
 	pin_mode(trigPin, OUTPUT);
 	pin_mode(echoPin, INPUT_PULLUP);

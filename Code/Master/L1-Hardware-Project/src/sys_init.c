@@ -7,28 +7,31 @@
 
 #include "defines.h"
 
+
 void sys_init(void) {
-	sei();  //Enable global interrupt
-	
-	pin_mode(D0, INPUT);
-	pin_mode(C6, OUTPUT);
-	
-	PWM_init();
-	ADC_int();
 	I2C_master_init();
 	LCD_init();
-	LCD_msg("Group - 47");
-	_delay_ms(50);
-	
-	LCD_init();
-	//_delay_ms(3000);         /* wait for GPS receiver to initialize */
-	UART_init(9600);        /* initialize USART with 9600 baud rate */
-	LCD_clear();
-	
-	DDRD = 0xFF;
-	DDRC = 0xFF;	
 
+	LCD_clear_msg("Group 47 Master");
+	LCD_line_2();
+	LCD_msg("Initializing....");
+	_delay_ms(10);
+
+	ADC_int();
+	SPI_master_init();
+
+
+	nrf_init(NRF_MODE_PTX, NRF_TX_PLOAD);
+
+	btn_init();
+
+	joystick_init();
+
+
+	LCD_line_2();
+	LCD_msg("Init Completed.");
+	_delay_ms(500);
+
+	LCD_line_2();
+	LCD_msg("Running         ");
 }
-
-
-

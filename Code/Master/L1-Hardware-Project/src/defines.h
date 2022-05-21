@@ -15,8 +15,16 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-#include <stdbool.h>
 #include <string.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+#include "utils/nRF24L01/spi_config.h"
+#include "utils/nRF24L01/avr_spi.h"
+#include "utils/nRF24L01/nrf24l01_reg.h"
+#include "utils/nRF24L01/nrf24l01_config.h"
+#include "utils/nRF24L01/nrf24l01.h"
+
 
 typedef struct Pin {
 	uint8_t pin;
@@ -38,6 +46,15 @@ typedef struct Pin {
 //GPS related
 #define Buffer_Size 150
 #define degrees_buffer_size 20
+
+// Mode
+typedef enum {
+	UP_DOWN = 0,
+	LEFT_RIGHT,
+	FORW_BACKW,
+	SIREN,
+	MODE
+} uint8_mode;
 
 int timer0_overflow; // Overflow for Timer 1
 
@@ -131,7 +148,7 @@ char key_char();
 void key_string(char buffer[], int buff);
 
 // Ultrasonic Sensor
-int ultrazonic_distance(Pin trigPin, Pin echoPin, int timeout);
+int ultrazonic_distance(Pin trigPin, Pin echoPin, unsigned long timeout);
 unsigned long pulse_in(Pin pin, unsigned long timeout);
 
 // SPI
@@ -170,6 +187,23 @@ int angle_from_north(float lati_input, float longi_input);
 char* itoa(int num, char* buffer, int base);
 void Double2String(char *output,double val,int n);
 char c[15];
+
+// Motors
+void motor_init();
+void setM2Speed(int speed);
+void setM1Speed(int speed);
+void drive(int m1Speed, int m2Speed);
+
+// Button
+void btn_init(void);
+uint8_t btn_mode();
+uint8_t btn_siren();
+
+// Joystick
+void joystick_init(void);
+uint8_t get_joystick_up_down();
+uint8_t get_joystick_left_right();
+uint8_t get_joystick_forward_backward();
 
 
 #endif

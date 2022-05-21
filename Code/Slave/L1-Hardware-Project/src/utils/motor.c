@@ -9,9 +9,15 @@
 
 #define PWM0A   D4    // Left Forward
 #define PWM0B   D5   // Right Forward
-#define DIRA    C3    // Left Backward
-#define DIRB    C4   // Right Backward
+#define DIRA    D6    // Left Backward
+#define DIRB    A5   // Right Backward
 
+void motor_init() {
+	pin_mode(PWM0A, OUTPUT);
+	pin_mode(PWM0B, OUTPUT);
+	pin_mode(DIRA, OUTPUT);
+	pin_mode(DIRB, OUTPUT);
+}
 
 void setM2Speed(int speed) {
 	unsigned char reverse = 0;
