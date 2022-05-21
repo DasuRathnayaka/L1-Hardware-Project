@@ -27,6 +27,7 @@ void sys_init(void) {
 	
 	DDRD = 0xFF;
 	DDRC = 0xFF;	
+
 }
 
 

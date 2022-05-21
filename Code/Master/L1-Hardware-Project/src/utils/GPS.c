@@ -14,8 +14,9 @@
 #include <stdbool.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <math.h>
 
-/*This will initialize the gps values according to the current GPS cordinates*/
+/*This will initialize the gps values according to the current GPS coordinates*/
 void GPS_init() {
 	int flag = 0;
 	while (flag != 1) {
@@ -92,13 +93,47 @@ void GPS_init() {
 	}
 }
 
-char* get_lati() {
-	return lati_value;//lati_value;
+//give latitude value as a string
+char* get_lati_str() {
+	return lati_value;	//lati_value;
 }
 
-char* get_longitude() {
-	return longi_value;//longi_value;
+//give longitude value as a string 
+char* get_longi_str() {
+	return longi_value;	//longi_value;
 }
+
+//give latitude value as a double 
+float get_lati_float() {
+	for (int i = 0; i < 15; i++) {
+		if (lati_value[i] == ',') {
+			lati_value[i] = '0';
+		}
+	}
+	float correct_lati_value =  atof(lati_value);
+	return correct_lati_value;
+}
+
+//give longitude value as a double
+float get_longi_float() {
+	for (int i = 0; i < 15; i++) {
+		if (longi_value[i] == ',') {
+			longi_value[i] = '0';
+		}
+	}
+	/*how to convert a latitude value to degrees*/
+	float decimal_value = (value/100);
+	return decimal_value;
+}
+
+/* take the inputed GPS coordinate and value and compare with inputted*/
+float angle_from_north(float lati_input, float longi_input) {
+	float dy = lati_input - get_lati_float();
+	float dx = cos(PI / 180 * get_lati_float()) * (longi_input - get_longi_float());
+	float angle = dy / dx;
+	return angle;
+}
+
 
 
 

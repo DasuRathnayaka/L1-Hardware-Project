@@ -16,18 +16,15 @@ void sys_loop(void) {
 // 	LCD_line_2();
 // 	LCD_msg("Longi:");
 // 	LCD_msg(longi_value);									
-	
-GPS_init();
-	
-	
+	GPS_init();
 	LCD_line_1();
-	LCD_msg("Lati: ");
-	LCD_msg(get_lati() );
-	LCD_line_2();
-	LCD_msg("Longi:");
-	LCD_msg(longi_value);
-	LCD_line_1();
-	LCD_msg("Hi");
-	LCD_line_2();
-	LCD_msg("Hellow");
+	LCD_msg("Angle:");
+	sprintf(c, "%d", angle_from_north(8.3114, 80.4037));
+	LCD_msg(c);
+	LCD_msg(output);
+	
+	//LCD_msg(get_lati_str());
+// 	LCD_line_2();
+// 	LCD_msg("Lon:");
+// 	LCD_msg(get_longi_str());
 }
