@@ -6,8 +6,6 @@
 #include "../defines.h"
 
 #define BAUD 9600       //BAUDRATE = 9600
-#define F_CPU 8000000UL
-#define SREG	_SFR_IO8(0x3f)
 
 #include <avr/io.h>
 #include <string.h>
@@ -16,105 +14,122 @@
 #include <stdbool.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <math.h>
 
-// void convert_time_to_UTC();
-// void convert_to_degrees(char *);
+/*This will initialize the gps values according to the current GPS coordinates*/
+void GPS_init() {
+	int flag = 0;
+	while (flag != 1) {
+		value=UART_RxChar();
+		if(value=='$')
+		{
+			value=UART_RxChar();
+			if(value=='G')
+			{
+				value=UART_RxChar();
+				if(value=='P')
+				{
+					value=UART_RxChar();
+					if(value=='G')
+					{
+						value=UART_RxChar();
+						if(value=='G')
+						{
+							value=UART_RxChar();
+							if(value=='A')
+							{
+								value=UART_RxChar();
+								if(value==',')
+								{
+									value=UART_RxChar();
+									while(value!=',')
+									{
+										value=UART_RxChar();
+									}
+									lati_value[0]=UART_RxChar();
+									value=lati_value[0];
+									for(i=1;value!=',';i++)
+									{
+										lati_value[i]=UART_RxChar();
+										value=lati_value[i];
+									}
+									lati_dir=UART_RxChar();
+									value=UART_RxChar();
+									while(value!=',')
+									{
+										value=UART_RxChar();
+									}
+									longi_value[0]=UART_RxChar();
+									value=longi_value[0];
+									for(i=1;value!=',';i++)
+									{
+										longi_value[i]=UART_RxChar();
+										value=longi_value[i];
+									}
+									longi_dir=UART_RxChar();
+									flag = 1;
 
-
-void get_gpstime(){
-	cli();
-	uint8_t time_index=0;
-
-	/* parse Time in GGA string stored in buffer */
-	for(uint8_t index = 0;GGA_Buffer[index]!=','; index++) {
-		Time_Buffer[time_index] = GGA_Buffer[index];
-		time_index++;
+								} else {
+									continue;
+								}
+							} else {
+								continue;
+							}
+						} else {
+							continue;
+						}
+					} else {
+						continue;
+					}
+				} else {
+					continue;
+				}
+			} else {
+				continue;
+			}
+		} else {
+			continue;
+		}
 	}
-	convert_time_to_UTC();
-	sei();
 }
 
-void get_latitude(uint16_t lat_pointer){
-	cli();
-	uint8_t lat_index;
-	uint8_t index = lat_pointer+1;
-	lat_index=0;
-	
-	/* parse Latitude in GGA string stored in buffer */
-	for(;GGA_Buffer[index]!=',';index++){
-		Latitude_Buffer[lat_index]= GGA_Buffer[index];
-		lat_index++;
+//give latitude value as a string
+char* get_lati_str() {
+	return lati_value;	//lati_value;
+}
+
+//give longitude value as a string
+char* get_longi_str() {
+	return longi_value;	//longi_value;
+}
+
+//give latitude value as a double
+float get_lati_float() {
+	for (int i = 0; i < 15; i++) {
+		if (lati_value[i] == ',') {
+			lati_value[i] = '0';
+		}
 	}
-	
-	Latitude_Buffer[lat_index++] = GGA_Buffer[index++];
-	Latitude_Buffer[lat_index]   = GGA_Buffer[index];  /* get direction */
-	convert_to_degrees(Latitude_Buffer);
-	sei();
+	float correct_lati_value =  atof(lati_value);
+	return correct_lati_value;
 }
 
-void get_longitude(uint16_t long_pointer){
-	cli();
-	uint8_t long_index;
-	uint8_t index = long_pointer+1;
-	long_index=0;
-	
-	/* parse Longitude in GGA string stored in buffer */
-	for( ; GGA_Buffer[index]!=','; index++){
-		Longitude_Buffer[long_index]= GGA_Buffer[index];
-		long_index++;
+//give longitude value as a double
+float get_longi_float() {
+	for (int i = 0; i < 15; i++) {
+		if (longi_value[i] == ',') {
+			longi_value[i] = '0';
+		}
 	}
-	
-	Longitude_Buffer[long_index++] = GGA_Buffer[index++];
-	Longitude_Buffer[long_index]   = GGA_Buffer[index]; /* get direction */
-	convert_to_degrees(Longitude_Buffer);
-	sei();
+	/*how to convert a latitude value to degrees*/
+	float decimal_value = (value/100);
+	return decimal_value;
 }
 
-void get_altitude(uint16_t alt_pointer){
-	cli();
-	uint8_t alt_index;
-	uint8_t index = alt_pointer+1;
-	alt_index=0;
-	/* parse Altitude in GGA string stored in buffer */
-	for( ; GGA_Buffer[index]!=','; index++){
-		Altitude_Buffer[alt_index]= GGA_Buffer[index];
-		alt_index++;
-	}
-	
-	Altitude_Buffer[alt_index] = GGA_Buffer[index+1];
-	sei();
+/* take the inputed GPS coordinate and value and compare with inputted*/
+float angle_from_north(float lati_input, float longi_input) {
+	float dy = lati_input - get_lati_float();
+	float dx = cos(PI / 180 * get_lati_float()) * (longi_input - get_longi_float());
+	float angle = dy / dx;
+	return angle;
 }
-
-void convert_time_to_UTC()
-{
-	unsigned int hour, min, sec;
-	uint32_t Time_value;
-		
-	Time_value = atol(Time_Buffer);       /* convert string to integer */
-	hour = (Time_value / 10000);          /* extract hour from integer */
-	min  = (Time_value % 10000) / 100;    /* extract minute from integer */
-	sec  = (Time_value % 10000) % 100;    /* extract second from integer*/
-
-	sprintf(Time_Buffer, "%d:%d:%d", hour,min,sec);
-	
-}
-
-void convert_to_degrees(char *raw){
-	
-	double value;
-	float decimal_value,temp;
-	
-	int32_t degrees;
-	
-	float position;
-	value = atof(raw);    /* convert string into float for conversion */
-	
-	/* convert raw latitude/longitude into degree format */
-	decimal_value = (value/100);
-	degrees       = (int)(decimal_value);
-	temp          = (decimal_value - (int)decimal_value)/0.6; 
-	position      = (float)degrees + temp;
-	
-	dtostrf(position, 6, 4, degrees_buffer);  /* convert float value into string */	
-}
-
