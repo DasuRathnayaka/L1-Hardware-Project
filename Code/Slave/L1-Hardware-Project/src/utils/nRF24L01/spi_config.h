@@ -9,10 +9,10 @@
  *		SCK_BIT:	Bit number of SCK signal in SPI_PORT (eg: 7)
  *		SS_BIT:		Bit number of SS signal in SPI_PORT (eg: 4)
  */
- 
- 
- #ifndef SPI_CONFIG_H
- #define SPI_CONFIG_H
+
+
+#ifndef SPI_CONFIG_H
+#define SPI_CONFIG_H
  
 /* SPI Port and Pin definitions */
 #define SPI_DDR		DDRB

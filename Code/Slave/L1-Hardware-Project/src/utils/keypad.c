@@ -7,92 +7,103 @@
 
 #include "../defines.h"
 
-// Set PORT C for keypad.
-#define KEY_PRT PORTC
-#define KEY_DDR DDRC
-#define KEY_PIN PINC
+#define KEY_PRT 	PORTA
+#define KEY_DDR		DDRA
+#define KEY_PIN		PINA
 
 unsigned char keypad[4][4] = {
-	{'7', '8', '9', '/'},
-	{'4', '5', '6', '*'},
-    {'1', '2', '3', '-'},
-    {' ', '0', '=', '+'},
+	{'7','4','1',' '},
+	{'8','5','2','0'},
+	{'9','6','3','='},
+	{'/','*','-','+'},
 };
 
-unsigned char col, row;
+unsigned char colloc, rowloc;
+
 
 char key_char() {
-    while (1) {
-        KEY_DDR = 0xF0; // Set Data Direction (Input / Output)
-        KEY_PRT = 0xFF; // First 4 output hight. Second 4 input pull-up
+	while(1) {
+		KEY_DDR = 0xF0;           /* set port direction as input-output */
+		KEY_PRT = 0xFF;
 
-        do {
-            KEY_PRT &= 0x0F; // Mask PORT for column read only
-            asm("NOP");
-            col = (KEY_PIN & 0x0F); // Read status of column
-        } while (col != 0x0F);
+		do
+		{
+			KEY_PRT &= 0x0F;      /* mask PORT for column read only */
+			asm("NOP");
+			colloc = (KEY_PIN & 0x0F); /* read status of column */
+		} while(colloc != 0x0F);
+		
+		do
+		{
+			do
+			{
+				_delay_ms(20);             /* 20ms key debounce time */
+				colloc = (KEY_PIN & 0x0F); /* read status of column */
+			} while(colloc == 0x0F);        /* check for any key press */
+			
+			_delay_ms (40);	            /* 20 ms key debounce time */
+			colloc = (KEY_PIN & 0x0F);
+		} while(colloc == 0x0F);
 
-        do {
-            do {
-                _delay_ms(20); // 20ms key debounce time
-                col = (KEY_PIN & 0x0F); // Read status of column
-            } while (col == 0x0F); // Check for any key press
+		/* now check for rows */
+		KEY_PRT = 0xEF;            /* check for pressed key in 1st row */
+		asm("NOP");
+		colloc = (KEY_PIN & 0x0F);
+		if(colloc != 0x0F)
+		{
+			rowloc = 0;
+			break;
+		}
 
-            _delay_ms(40); // 20 ms key debounce time
-            col = (KEY_PIN & 0x0F);
-        } while (col == 0x0F);
+		KEY_PRT = 0xDF;		/* check for pressed key in 2nd row */
+		asm("NOP");
+		colloc = (KEY_PIN & 0x0F);
+		if(colloc != 0x0F)
+		{
+			rowloc = 1;
+			break;
+		}
+		
+		KEY_PRT = 0xBF;		/* check for pressed key in 3rd row */
+		asm("NOP");
+		colloc = (KEY_PIN & 0x0F);
+		if(colloc != 0x0F)
+		{
+			rowloc = 2;
+			break;
+		}
 
-        // Now check for rows
-        KEY_PRT = 0xEF; // Check for pressed key in 1st row
-        asm("NOP");
-        col = (KEY_PIN & 0x0F);
-        if (col != 0x0F) {
-            row = 0;
-            break;
-        }
+		KEY_PRT = 0x7F;		/* check for pressed key in 4th row */
+		asm("NOP");
+		colloc = (KEY_PIN & 0x0F);
+		if(colloc != 0x0F)
+		{
+			rowloc = 3;
+			break;
+		}
+	}
 
-        KEY_PRT = 0xDF; // Check for pressed key in 2nd row
-        asm("NOP");
-        col = (KEY_PIN & 0x0F);
-        if (col != 0x0F) {
-            row = 1;
-            break;
-        }
-
-        KEY_PRT = 0xBF; // Check for pressed key in 3rd row
-        asm("NOP");
-        col = (KEY_PIN & 0x0F);
-        if (col != 0x0F) {
-            row = 2;
-            break;
-        }
-
-        KEY_PRT = 0x7F; // Check for pressed key in 4th row
-        asm("NOP");
-        col = (KEY_PIN & 0x0F);
-        if (col != 0x0F) {
-            row = 3;
-            break;
-        }
-    }
-
-    if (col == 0x0E)
-        return (keypad[row][0]);
-    else if (col == 0x0D)
-        return (keypad[row][1]);
-    else if (col == 0x0B)
-        return (keypad[row][2]);
-    else
-        return (keypad[row][3]);
+	if(colloc == 0x0E)
+		return(keypad[rowloc][0]);
+	else if(colloc == 0x0D)
+		return(keypad[rowloc][1]);
+	else if(colloc == 0x0B)
+		return(keypad[rowloc][2]);
+	else
+		return(keypad[rowloc][3]);
 }
 
 
 void key_string(char buffer[], int buff) {
+	UART_TxChar('\n');
 	for(int i = 0; i < buff; i++) {
 		char temp = key_char();
+		LCD_char(temp);
+		UART_TxChar(temp);
 		if (temp == '=') {
-			buffer[i] == '\0';
+			buffer[i] = '\0';
 			break;
 		}
+		buffer[i] = temp;
 	}
 }

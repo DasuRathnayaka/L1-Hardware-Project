@@ -82,8 +82,7 @@ unsigned char I2C_read() {
 void I2C_slave_read_buffer(char* buffer, int length) {
 	I2C_listen();
 	for(char* i = buffer; i < buffer + length; i++) {
-		char temp = I2C_read();
-		*i = temp;
+		*i = I2C_read();
 	}
 	I2C_listen();
 }

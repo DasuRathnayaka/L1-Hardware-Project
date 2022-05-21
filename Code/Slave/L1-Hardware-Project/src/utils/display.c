@@ -66,12 +66,37 @@ void delay(int ms) {
 	for(j=0;j<=120;j++);
 }
 
+void LCD_char(char c) {
+	I2C_start();
+	I2C_select_slave(LCD_ADDRESS, WRITE);
+	
+	LCD_dwr(c);
+	
+	I2C_stop();
+}
+
 void LCD_msg(char *c) {
 	I2C_start();
 	I2C_select_slave(LCD_ADDRESS, WRITE);
 	
 	while(*c != 0)      //----Wait till all String are passed to LCD
 	LCD_dwr(*c++);		//----Send the String to LCD
+	
+	I2C_stop();
+}
+
+void LCD_num(double num) {
+	I2C_start();
+	I2C_select_slave(LCD_ADDRESS, WRITE);
+	
+	char c[16];
+	sprintf(c, "%f", num);
+	
+// 	while(*c != 0)      //----Wait till all String are passed to LCD
+// 	LCD_dwr(*c++);		//----Send the String to LCD
+	for(char *a = c; *a != 0; a++) {
+		LCD_dwr(*a);
+	}
 	
 	I2C_stop();
 }
