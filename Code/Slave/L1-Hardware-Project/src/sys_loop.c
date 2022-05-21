@@ -8,11 +8,34 @@
 #include "defines.h"
 
 
+int kp = 5, kq = 5, base_speed = 100, kr = 30;
+
+
 void sys_loop(void) {
-	uint8_t up_down = get_joystick_up_down();
-	uint8_t left_right = get_joystick_left_right();
-	uint8_t forward_backward = get_joystick_forward_backward();
-	uint8_t siren = btn_siren();
-	uint8_t auto_manual_mode = btn_mode();
-	nrf_tx_data(up_down, left_right, forward_backward, siren, auto_manual_mode);
+	uint8_t cam_angle, right, forward, siren, auto_mode;
+	nrf_rx_data(&cam_angle, &right, &forward, &siren, &auto_mode);
+	
+	if (auto_mode == 1) {
+		// Auto Mode
+		int error = ultrazonic_error();
+		int angle_error = 0;
+		
+		int rPower = base_speed + error + angle_error * kr;
+		int lPower = base_speed - error - angle_error * kr;
+		
+		drive(lPower, rPower);
+		servo_write(0);
+	} else {
+		// Manual Mode
+		int rPower = forward * kp - right * kq;
+		int lPower = forward * kp + right * kq;
+		
+		drive(lPower, rPower);
+		servo_write(cam_angle);
+	}
+	
+	if (siren == 1)
+		digital_write(B0, HIGH);
+	else
+		digital_write(B0, LOW);
 }

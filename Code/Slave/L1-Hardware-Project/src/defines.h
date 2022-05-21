@@ -16,7 +16,6 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <stdbool.h>
-#include <stdarg.h>
 #include <stdint.h>
 
 #include "utils/nRF24L01/spi_config.h"
@@ -31,6 +30,11 @@ typedef struct Pin {
 	char port;
 } Pin;
 
+typedef struct Coordinate {
+	double longitude;
+	double latitude;
+} Coordinate;
+
 #define INPUT 0
 #define OUTPUT 1
 #define INPUT_PULLUP 2
@@ -39,7 +43,7 @@ typedef struct Pin {
 #define LOW 0
 
 // I2C
-#define MY_ADDRESS 0x20
+#define MY_ADDRESS 0xCC
 #define READ 1
 #define WRITE 0
 
@@ -52,7 +56,11 @@ typedef enum {
 	MODE
 } uint8_mode;
 
+Coordinate destination;
+
 int timer0_overflow; // Overflow for Timer 1
+
+unsigned long ultrazonic_pulse;
 
 
 const Pin A0;
@@ -119,10 +127,12 @@ int PWM_write(Pin pin, int dutyCyle);
 // Display
 void LCD_init();
 void LCD_msg(char *c);
-void LCD_clear_msg(char* c);	
+void LCD_clear_msg(char* c);
 void LCD_clear();
 void LCD_line_1();
 void LCD_line_2();
+void LCD_num(double num);
+void LCD_char(char c);
 
 // UART
 void UART_init(long USART_BAUDRATE);
@@ -135,7 +145,9 @@ char key_char();
 void key_string(char buffer[], int buff);
 
 // Ultrasonic Sensor
-int ultrazonic_distance(Pin trigPin, Pin echoPin, int timeout);
+void ultrazonic_init();
+int ultrazonic_error();
+int ultrazonic_distance(Pin trigPin, Pin echoPin, unsigned long timeout);
 unsigned long pulse_in(Pin pin, unsigned long timeout);
 
 // SPI
@@ -164,6 +176,12 @@ unsigned char I2C_read();
 void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 
+// Motors
+void motor_init();
+void setM2Speed(int speed);
+void setM1Speed(int speed);
+void drive(int m1Speed, int m2Speed);
+
 // Button
 void btn_init(void);
 uint8_t btn_mode();
@@ -174,6 +192,10 @@ void joystick_init(void);
 uint8_t get_joystick_up_down();
 uint8_t get_joystick_left_right();
 uint8_t get_joystick_forward_backward();
+
+// Servo
+void servo_init();
+void servo_write(int angle);
 
 
 #endif

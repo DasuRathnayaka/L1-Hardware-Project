@@ -187,6 +187,9 @@
     <Compile Include="src\utils\nRF24L01\spi_config.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\utils\servo.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\utils\SPI.c">
       <SubType>compile</SubType>
     </Compile>
