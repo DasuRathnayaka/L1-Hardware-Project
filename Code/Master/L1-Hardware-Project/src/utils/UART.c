@@ -46,8 +46,8 @@ void UART_TxChar(char ch)
 }
 
 /*
-	To send String data
-	===================
+	To send String data from Atmega
+	===============================
 */
 void UART_SendString(char *str)
 {

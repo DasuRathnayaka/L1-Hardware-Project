@@ -15,6 +15,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -42,6 +43,10 @@ typedef struct Pin {
 #define READ 1
 #define WRITE 0
 
+//GPS related
+#define Buffer_Size 150
+#define degrees_buffer_size 20
+
 // Mode
 typedef enum {
 	UP_DOWN = 0,
@@ -53,6 +58,15 @@ typedef enum {
 
 int timer0_overflow; // Overflow for Timer 1
 
+#define PI 3.142857
+unsigned char i;		//Max width of the LCD Display.
+#define RATE 250					//Rate of scrolling.
+void WaitMs(unsigned int ms);		//Declaration of delay routine used.
+void usart_init();
+unsigned int usart_getch();
+char value,lati_value[15],lati_dir, longi_value[15], longi_dir;
+char* tempValue;
+char output[100];
 
 const Pin A0;
 const Pin A1;
@@ -162,6 +176,17 @@ void I2C_listen(void);
 unsigned char I2C_read();
 void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
+
+//GPS module
+void GPS_init();
+char* get_lati_str();
+char* get_longi_str();
+int get_lati_float();
+int get_longi_float();
+int angle_from_north(float lati_input, float longi_input);
+char* itoa(int num, char* buffer, int base);
+void Double2String(char *output,double val,int n);
+char c[15];
 
 // Motors
 void motor_init();
