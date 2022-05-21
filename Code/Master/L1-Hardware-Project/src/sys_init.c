@@ -9,17 +9,29 @@
 
 
 void sys_init(void) {
-	pin_mode(D3, INPUT_PULLUP);
-	pin_mode(B1, OUTPUT);
-	
-	SPI_deselect_slave(SLAVE_SS_0);
-	SPI_master_init();
-	SPI_select_slave(SLAVE_SS_0);
-	
-	I2C_init();
-	I2C_start();
-	I2C_write(0x70);
+	I2C_master_init();
 	LCD_init();
-	LCD_cmd(0x80);
-	LCD_msg("Master...");
+
+	LCD_clear_msg("Group 47 Master");
+	LCD_line_2();
+	LCD_msg("Initializing....");
+	_delay_ms(10);
+
+	ADC_int();
+	SPI_master_init();
+
+
+	nrf_init(NRF_MODE_PTX, NRF_TX_PLOAD);
+
+	btn_init();
+
+	joystick_init();
+
+
+	LCD_line_2();
+	LCD_msg("Init Completed.");
+	_delay_ms(500);
+
+	LCD_line_2();
+	LCD_msg("Running         ");
 }

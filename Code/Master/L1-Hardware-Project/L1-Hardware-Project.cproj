@@ -151,10 +151,16 @@
     <Compile Include="src\utils\ADC.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\utils\button.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\utils\GPS.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\I2C.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\joystick.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\keypad.c">

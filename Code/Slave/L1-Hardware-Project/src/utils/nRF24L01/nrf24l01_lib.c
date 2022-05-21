@@ -469,8 +469,8 @@ int nrf_rx_data_with_ACK(uint8_t *up_down, uint8_t *left_right, uint8_t *forward
  * Note:
  *	- Data : up/down + left/right + forward/backward + siren + mode
  */
-void nrf_tx_data(uint8_t up_down, uint8_t left_right, uint8_t forward_backward, uint8_t siren, uint8_t auto_manual_mode) {
-	uint8_t data[] = {up_down, left_right, forward_backward, siren, auto_manual_mode};
+void nrf_tx_data(int up_down, int left_right, int forward_backward, int siren, int auto_manual_mode) {
+	uint8_t data[] = {(char)up_down, (char)left_right, (char)forward_backward, (char)siren, (char)auto_manual_mode};
 	nrf_set_ack_payload(NRF_TX_PLOAD_NOACK, data, 5);
 }
 
@@ -481,7 +481,7 @@ void nrf_tx_data(uint8_t up_down, uint8_t left_right, uint8_t forward_backward, 
  *	- 0 : Receive successfully
  *	- -1: Error
  */
-int nrf_rx_data(uint8_t *up_down, uint8_t *left_right, uint8_t *forward_backward, uint8_t *siren, uint8_t *auto_manual_mode) {
+int nrf_rx_data(int *up_down, int *left_right, int *forward_backward, int *siren, int *auto_manual_mode) {
 	uint8_t data[5], length;
 	const uint8_t pipe = nrf_receive_packet(data, &length);
 	
@@ -501,11 +501,11 @@ int nrf_rx_data(uint8_t *up_down, uint8_t *left_right, uint8_t *forward_backward
 			return-1;
 	}
 	
-	*up_down = data[0];
-	*left_right = data[1];
-	*forward_backward = data[2];
-	*siren = data[3];
-	*auto_manual_mode = data[4];
+	*up_down = (char)data[0];
+	*left_right = (char)data[1];
+	*forward_backward = (char)data[2];
+	*siren = (char)data[3];
+	*auto_manual_mode = (char)data[4];
 	return 0;
 }
 
