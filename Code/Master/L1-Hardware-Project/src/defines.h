@@ -19,6 +19,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+
 #include "utils/nRF24L01/spi_config.h"
 #include "utils/nRF24L01/avr_spi.h"
 #include "utils/nRF24L01/nrf24l01_reg.h"
@@ -59,11 +60,7 @@ typedef enum {
 int timer0_overflow; // Overflow for Timer 1
 
 #define PI 3.142857
-unsigned char i;		//Max width of the LCD Display.
 #define RATE 250					//Rate of scrolling.
-void WaitMs(unsigned int ms);		//Declaration of delay routine used.
-void usart_init();
-unsigned int usart_getch();
 char value,lati_value[15],lati_dir, longi_value[15], longi_dir;
 char* tempValue;
 char output[100];
@@ -181,8 +178,8 @@ void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 void GPS_init();
 char* get_lati_str();
 char* get_longi_str();
-int get_lati_float();
-int get_longi_float();
+float get_lati_float();
+float get_longi_float();
 int angle_from_north(float lati_input, float longi_input);
 char* itoa(int num, char* buffer, int base);
 void Double2String(char *output,double val,int n);

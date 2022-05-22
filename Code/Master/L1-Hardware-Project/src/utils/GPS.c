@@ -4,71 +4,49 @@
 */
 
 #include "../defines.h"
-
 #define BAUD 9600       //BAUDRATE = 9600
-
-#include <avr/io.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <util/delay.h>
-#include <avr/interrupt.h>
-#include <math.h>
 
 //This will initialize the GPS values according to the current GPS coordinates
 void GPS_init() {
 	int flag = 0;
 	while (flag != 1) {
-		value=UART_RxChar();
-		if(value=='$')
-		{
-			value=UART_RxChar();
-			if(value=='G')
-			{
-				value=UART_RxChar();
-				if(value=='P')
-				{
-					value=UART_RxChar();
-					if(value=='G')
-					{
-						value=UART_RxChar();
-						if(value=='G')
-						{
-							value=UART_RxChar();
-							if(value=='A')
-							{
-								value=UART_RxChar();
-								if(value==',')
-								{
-									value=UART_RxChar();
-									while(value!=',')
-									{
-										value=UART_RxChar();
+		value = UART_RxChar();
+		if (value == '$') {
+			value = UART_RxChar();
+			if (value == 'G') {
+				value = UART_RxChar();
+				if (value == 'P') {
+					value = UART_RxChar();
+					if (value == 'G') {
+						value = UART_RxChar();
+						if (value == 'G') {
+							value = UART_RxChar();
+							if (value == 'A') {
+								value = UART_RxChar();
+								if (value == ',') {
+									value = UART_RxChar();
+									while (value != ',') {
+										value = UART_RxChar();
 									}
-									lati_value[0]=UART_RxChar();
-									value=lati_value[0];
-									for(i=1;value!=',';i++)
-									{
-										lati_value[i]=UART_RxChar();
-										value=lati_value[i];
+									lati_value[0] = UART_RxChar();
+									value = lati_value[0];
+									for (int i = 1; value != ','; i++) {
+										lati_value[i] = UART_RxChar();
+										value = lati_value[i];
 									}
-									lati_dir=UART_RxChar();
-									value=UART_RxChar();
-									while(value!=',')
-									{
-										value=UART_RxChar();
+									lati_dir = UART_RxChar();
+									value = UART_RxChar();
+									while (value != ',') {
+										value = UART_RxChar();
 									}
-									longi_value[0]=UART_RxChar();
-									value=longi_value[0];
-									for(i=1;value!=',';i++)
-									{
-										longi_value[i]=UART_RxChar();
-										value=longi_value[i];
+									longi_value[0] = UART_RxChar();
+									value = longi_value[0];
+									for(int i = 1; value != ','; i++) {
+										longi_value[i] = UART_RxChar();
+										value = longi_value[i];
 									}
-									longi_dir=UART_RxChar();
+									longi_dir = UART_RxChar();
 									flag = 1;
-									
 								} else {
 									continue;
 								}
@@ -110,7 +88,7 @@ float get_lati_float() {
 			lati_value[i] = '0';
 		}
 	}
-	float correct_lati_value =  atof(lati_value) / 100;
+	float correct_lati_value = atof(lati_value) / 100;
 	return correct_lati_value;
 }
 
