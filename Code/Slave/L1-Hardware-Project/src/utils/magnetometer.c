@@ -13,7 +13,7 @@
 
 void Magneto_init()		/* Magneto initialize function */
 {
-	I2C_select_slave(0x3C);	/* Start and write SLA+W */
+	I2C_select_slave(0x3C, WRITE);	/* Start and write SLA+W */
 	
 	I2C_write(0x00);	/* Write memory location address */
 	I2C_write(0x70);	/* Configure register A as 8-average, 15 Hz default, normal measurement */
@@ -28,7 +28,7 @@ int Magneto_GetHeading()
 	int x, y, z;
 	double Heading;
 	I2C_start();
-	I2C_select_slave(0x3C);
+	I2C_select_slave(0x3C, WRITE);
 	
 	I2C_write(0x3C);	/* Start and wait for acknowledgment */
 	I2C_write(0x03);	/* Write memory location address */

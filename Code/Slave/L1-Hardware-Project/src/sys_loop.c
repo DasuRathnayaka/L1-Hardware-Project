@@ -24,7 +24,7 @@ void sys_loop(void) {
 		GPS_init();
 		
 		// Calculate angle error from facing direction
-		int angle_error = angle_from_north(destination) - Magneto_GetHeading();
+		int angle_error = angle_from_north(destination.latitude, destination.longitude) - Magneto_GetHeading();
 		
 		// Get the direction change occurred by obstacles
 		int error = ultrazonic_error();
