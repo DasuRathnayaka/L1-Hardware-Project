@@ -110,7 +110,7 @@ float get_lati_float() {
 			lati_value[i] = '0';
 		}
 	}
-	float correct_lati_value =  atof(lati_value);
+	float correct_lati_value =  atof(lati_value) / 100;
 	return correct_lati_value;
 }
 
@@ -122,15 +122,16 @@ float get_longi_float() {
 		}
 	}
 	/*how to convert a latitude value to degrees*/
-	float decimal_value = (value/100);
-	return decimal_value;
+	float correct_longi_value = atof(longi_value) / 100;
+	return correct_longi_value;
 }
 
 /* take the inputed GPS coordinate and value and compare with inputted*/
-float angle_from_north(float lati_input, float longi_input) {
+int angle_from_north(float lati_input, float longi_input) {
 	float dy = lati_input - get_lati_float();
 	float dx = cos(PI / 180 * get_lati_float()) * (longi_input - get_longi_float());
 	float angle = dy / dx;
+	int temp = angle;
 	return angle;
 }
 
