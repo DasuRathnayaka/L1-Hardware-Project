@@ -206,17 +206,6 @@ void setM2Speed(int speed);
 void setM1Speed(int speed);
 void drive(int m1Speed, int m2Speed);
 
-// Button
-void btn_init(void);
-uint8_t btn_mode();
-uint8_t btn_siren();
-
-// Joystick
-void joystick_init(void);
-uint8_t get_joystick_up_down();
-uint8_t get_joystick_left_right();
-uint8_t get_joystick_forward_backward();
-
 // Servo
 void servo_init();
 void servo_write(int angle);

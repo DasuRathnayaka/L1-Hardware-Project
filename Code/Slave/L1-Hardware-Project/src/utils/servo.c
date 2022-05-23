@@ -19,7 +19,6 @@ void servo_init() {
 
 
 void servo_write(int angle) {
-	angle += 90;
-	float val = angle / 180;
-	
+	float val = (31 - 14) / 255 * angle + 14;
+	PWM_write(B3, val);
 }

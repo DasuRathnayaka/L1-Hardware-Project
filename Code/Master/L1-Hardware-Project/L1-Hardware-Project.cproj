@@ -154,16 +154,10 @@
     <Compile Include="src\utils\button.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\utils\GPS.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\utils\I2C.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\joystick.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\utils\keypad.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\nRF24L01\avr_spi.c">
@@ -202,16 +196,7 @@
     <Compile Include="src\utils\interrupts.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\utils\motor.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\utils\PWM.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\utils\basic.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\utils\ultrasonic.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
