@@ -19,6 +19,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+
 #include "utils/nRF24L01/spi_config.h"
 #include "utils/nRF24L01/avr_spi.h"
 #include "utils/nRF24L01/nrf24l01_reg.h"
@@ -43,10 +44,6 @@ typedef struct Pin {
 #define READ 1
 #define WRITE 0
 
-//GPS related
-#define Buffer_Size 150
-#define degrees_buffer_size 20
-
 // Mode
 typedef enum {
 	UP_DOWN = 0,
@@ -58,15 +55,6 @@ typedef enum {
 
 int timer0_overflow; // Overflow for Timer 1
 
-#define PI 3.142857
-unsigned char i;		//Max width of the LCD Display.
-#define RATE 250					//Rate of scrolling.
-void WaitMs(unsigned int ms);		//Declaration of delay routine used.
-void usart_init();
-unsigned int usart_getch();
-char value,lati_value[15],lati_dir, longi_value[15], longi_dir;
-char* tempValue;
-char output[100];
 
 const Pin A0;
 const Pin A1;
@@ -124,11 +112,6 @@ void ADC_int(void);
 int ADC_read(Pin pin);
 int ADC_read_full(Pin pin);
 
-// PWN
-void PWM_init(void);
-int PWM_write_reg(void *regi, int dutyCyle);
-int PWM_write(Pin pin, int dutyCyle);
-
 // Display
 void LCD_init();
 void LCD_msg(char *c);
@@ -142,14 +125,6 @@ void UART_init(long USART_BAUDRATE);
 unsigned char UART_RxChar();
 void UART_TxChar(char ch);
 void UART_SendString(char *str);
- 
-// Keypad
-char key_char();
-void key_string(char buffer[], int buff);
-
-// Ultrasonic Sensor
-int ultrazonic_distance(Pin trigPin, Pin echoPin, unsigned long timeout);
-unsigned long pulse_in(Pin pin, unsigned long timeout);
 
 // SPI
 const Pin SLAVE_SS_0;
@@ -176,23 +151,6 @@ void I2C_listen(void);
 unsigned char I2C_read();
 void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
-
-//GPS module
-void GPS_init();
-char* get_lati_str();
-char* get_longi_str();
-int get_lati_float();
-int get_longi_float();
-int angle_from_north(float lati_input, float longi_input);
-char* itoa(int num, char* buffer, int base);
-void Double2String(char *output,double val,int n);
-char c[15];
-
-// Motors
-void motor_init();
-void setM2Speed(int speed);
-void setM1Speed(int speed);
-void drive(int m1Speed, int m2Speed);
 
 // Button
 void btn_init(void);

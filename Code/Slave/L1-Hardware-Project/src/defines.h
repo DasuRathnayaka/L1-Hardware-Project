@@ -193,9 +193,9 @@ void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 void GPS_init();
 char* get_lati_str();
 char* get_longi_str();
-int get_lati_float();
-int get_longi_float();
-float angle_from_north(Coordinate dest);
+float get_lati_float();
+float get_longi_float();
+int angle_from_north(float lati_input, float longi_input);
 char* itoa(int num, char* buffer, int base);
 void Double2String(char *output,double val,int n);
 char c[15];
@@ -205,17 +205,6 @@ void motor_init();
 void setM2Speed(int speed);
 void setM1Speed(int speed);
 void drive(int m1Speed, int m2Speed);
-
-// Button
-void btn_init(void);
-uint8_t btn_mode();
-uint8_t btn_siren();
-
-// Joystick
-void joystick_init(void);
-uint8_t get_joystick_up_down();
-uint8_t get_joystick_left_right();
-uint8_t get_joystick_forward_backward();
 
 // Servo
 void servo_init();
