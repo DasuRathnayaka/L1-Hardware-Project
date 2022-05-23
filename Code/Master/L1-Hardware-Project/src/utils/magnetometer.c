@@ -36,5 +36,4 @@ int Magneto_GetHeading()
 	if (Heading<0)		/* Check for sign */
 	Heading = Heading + 2*PI;
 	return (Heading* 180 / PI);/* Convert into angle and return */
-
 }
