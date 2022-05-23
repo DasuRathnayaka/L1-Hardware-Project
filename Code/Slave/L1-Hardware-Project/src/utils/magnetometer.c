@@ -1,14 +1,14 @@
 /*
  * magnetometer.c
  *
- * Created: 5/20/2022 9:53:22 AM
- *  Author: Upeksha
+ * Created: 4/20/2022 9:53:22 AM
+ *  Author: Upeksha Herath
  */ 
 
 #include "../defines.h"
 
 #define PI	3.14159265359	/* Define Pi value */
-#define Declination	-0.00669/* Define declination of location from where measurement going to be done. e.g. here we have added declination from location Pune city, India. we can get it from http://www.magnetic-declination.com */
+#define Declination	-0.00669/* Define declination of location from where measurement going to be done.*/
 
 
 void Magneto_init()		/* Magneto initialize function */
