@@ -2,5 +2,5 @@
 **/.idea
 **/Debug
 **/Project Backups
-*.workspace
+**/*.workspace
 **/Release
