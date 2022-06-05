@@ -21,8 +21,5 @@ void sys_init(void) {
 	
 	LCD_line_2();
 	LCD_msg("Init Completed.");
-	_delay_ms(500);
-
-	LCD_line_2();
-	LCD_msg("Running         ");
+	_delay_ms(1000);
 }

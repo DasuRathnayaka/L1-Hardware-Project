@@ -24,6 +24,8 @@ void sys_init(void) {
 	LCD_msg("Init Completed.");
 	_delay_ms(500);
 	
+	LCD_clear();
+	
 	LCD_line_1();
 	LCD_msg("Enter Location");
 	_delay_ms(500);
@@ -36,6 +38,8 @@ void sys_init(void) {
 	char longitude[20];
 	key_string(longitude, 20);
 	destination.longitude = strtod(longitude, temp);
+	
+	LCD_clear();
 	
 	LCD_line_1();
 	LCD_msg("Latitude        ");

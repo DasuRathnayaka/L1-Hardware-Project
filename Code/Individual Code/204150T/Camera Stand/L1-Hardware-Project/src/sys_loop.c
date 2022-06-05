@@ -9,13 +9,18 @@
 
 
 
+int siren = 0;
 void sys_loop(void) {
-	int siren = 0;
 	
 	servo_write(90);
 	
-	if (siren == 1)
+	if (siren == 1) {
 		digital_write(B0, HIGH);
-	else
+		siren = 0;
+	}
+	else {
 		digital_write(B0, LOW);
+		siren = 1;
+	}
+	_delay_ms(1000);
 }
