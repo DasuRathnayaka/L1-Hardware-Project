@@ -2,5 +2,7 @@
 **/.idea
 **/Debug
 **/Project Backups
-*.workspace
+**/*.workspace
 **/Release
+**/*-backups
+**/logs
