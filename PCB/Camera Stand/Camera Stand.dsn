@@ -2174,7 +2174,7 @@
     )
     (net /Atmega32/5V
       (pins J8-1 U4-3 DS1-2 DS1-4 U3-3 C5-1 R3-1 J3-2 J3-7 J7-1 R2-1 U5-10 U5-30 U5-32
-        U7-16 R1-1 U6-8 U6-16 RV1-3 J6-1 M5-2 K1-14 J5-1 Q1-3)
+        U7-16 R1-1 U6-8 U6-16 RV1-3 J6-1 M5-2 J5-1 Q1-3)
     )
     (net "Net-(D1-Pad1)"
       (pins D1-1 K1-A1 Q1-1)
@@ -2213,7 +2213,7 @@
       (pins DS1-16 U6-12)
     )
     (net "/Power Supply/12V"
-      (pins J3-1 J1-1 U2-1)
+      (pins J3-1 J1-1 U2-1 K1-14)
     )
     (net /Atmega32/SCL
       (pins R2-2 U5-22 U6-14 J2-2)
