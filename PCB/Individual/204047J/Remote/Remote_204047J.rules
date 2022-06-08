@@ -1,5 +1,5 @@
 
-(rules PCB Camera Stand
+(rules PCB Remote_204047J
   (snap_angle 
     fortyfive_degree
   )
@@ -11,7 +11,7 @@
     (via_costs 50)
     (plane_via_costs 5)
     (start_ripup_costs 100)
-    (start_pass_no 7)
+    (start_pass_no 5)
     (layer_rule F.Cu
       (active on)
       (preferred_direction horizontal)
@@ -53,15 +53,12 @@
     "kicad_default" "Via[0-1]_800:400_um-kicad_default"
   )
   (class default
-    "Net-(C1-Pad1)" /Atmega32/GND "Net-(C2-Pad1)" "/Power Supply/3.3V" /Atmega32/5V "Net-(D1-Pad1)" "Net-(DS1-Pad5)" "Net-(DS1-Pad6)"
-    "Net-(DS1-Pad8)" "unconnected-(DS1-Pad9)" "unconnected-(DS1-Pad10)" "unconnected-(DS1-Pad11)" "unconnected-(DS1-Pad12)" "Net-(DS1-Pad13)" "Net-(DS1-Pad14)" "Net-(DS1-Pad15)"
-    "Net-(DS1-Pad16)" "/Power Supply/12V" /Atmega32/SCL /Atmega32/SDA "unconnected-(J2-Pad4)" /Atmega32/D4 /Atmega32/C3 /Atmega32/C7
-    /Atmega32/D5 /Atmega32/A0 /Atmega32/A1 /Atmega32/A2 /Atmega32/A3 /Atmega32/A4 /Atmega32/A5 /Atmega32/A6
-    /Atmega32/A7 "Net-(J5-Pad2)" "Net-(J5-Pad3)" "Net-(J6-Pad2)" "Net-(J6-Pad3)" "Net-(J7-Pad2)" "Net-(J7-Pad3)" "Net-(J8-Pad2)"
-    "Net-(J8-Pad3)" /Atmega32/Rx /Atmega32/Tx "Net-(K1-Pad11)" "unconnected-(K1-Pad12)" /Atmega32/B3 "Net-(Q1-Pad2)" /Atmega32/B0
-    /Atmega32/C6 /Atmega32/D6 /Atmega32/CE /Atmega32/CSN /Atmega32/SCK /Atmega32/MOSI /Atmega32/MISO /Atmega32/IRQ
-    "Net-(U2-Pad3)" "unconnected-(U5-Pad16)" "unconnected-(U5-Pad17)" "unconnected-(U5-Pad21)" "unconnected-(U5-Pad24)" /Atmega32/C4 /Atmega32/C5 "unconnected-(U6-Pad6)"
-    "unconnected-(U6-Pad7)" "unconnected-(U6-Pad13)"
+    "Net-(C1-Pad1)" /Atmega32/GND "Net-(C2-Pad1)" "/Power Supply/3.3V" "/Power Supply/5V" "/Power Supply/12V" /Atmega32/5V /Atmega32/A0
+    "unconnected-(J2-Pad3)" "unconnected-(J2-Pad4)" /Atmega32/SCL /Atmega32/SDA "unconnected-(U1-Pad1)" /Atmega32/CE /Atmega32/IRQ "unconnected-(U1-Pad4)"
+    /Atmega32/CSN /Atmega32/MOSI /Atmega32/MISO /Atmega32/SCK "unconnected-(U1-Pad14)" "unconnected-(U1-Pad15)" /Atmega32/D2 /Atmega32/D3
+    "unconnected-(U1-Pad18)" "unconnected-(U1-Pad19)" "unconnected-(U1-Pad20)" "unconnected-(U1-Pad21)" "unconnected-(U1-Pad24)" "unconnected-(U1-Pad25)" "unconnected-(U1-Pad26)" "unconnected-(U1-Pad27)"
+    "unconnected-(U1-Pad28)" "unconnected-(U1-Pad29)" "unconnected-(U1-Pad33)" "unconnected-(U1-Pad34)" "unconnected-(U1-Pad35)" "unconnected-(U1-Pad36)" "unconnected-(U1-Pad37)" /Atmega32/A2
+    /Atmega32/A1 "Net-(U2-Pad3)"
     (clearance_class default)
     (via_rule default)
     (rule
