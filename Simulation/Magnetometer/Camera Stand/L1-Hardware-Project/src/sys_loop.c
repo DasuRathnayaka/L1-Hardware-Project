@@ -7,11 +7,13 @@
 
 #include "defines.h"
 
-char address = 0x22;
-
 void sys_loop(void) {
-	char val = ADC_read(A2);
-	char temp[] = { val };
-	I2C_master_write_buffer(address, temp, 1);
+	char temp[1];
+	I2C_slave_read_buffer(temp, 1);
+	
+	char val[16];
+	sprintf(val, " %d ", temp[0]);
+	
+	UART_SendString(val);
 	_delay_ms(1000);
 }

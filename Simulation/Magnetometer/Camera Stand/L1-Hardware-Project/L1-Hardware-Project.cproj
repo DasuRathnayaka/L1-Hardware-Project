@@ -148,19 +148,10 @@
     <Compile Include="src\sys_loop.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\utils\ADC.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\utils\GPS.c">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="src\utils\I2C.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\magnetometer.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\utils\UART.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\digital.c">
@@ -170,6 +161,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\utils\basic.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\utils\UART.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
