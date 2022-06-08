@@ -1,0 +1,82 @@
+
+(rules PCB Remote
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (app.freerouting.autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 2)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.0)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 2.0)
+    )
+  )
+  (rule
+    (width 250.0)
+    (clear 200.2)
+    (clear 125.0 (type smd_to_turn_gap))
+    (clear 50.0 (type smd_smd))
+  )
+  (padstack "Via[0-1]_800:400_um"
+    (shape
+      (circle F.Cu 800.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 800.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_800:400_um" "Via[0-1]_800:400_um" default
+  )
+  (via 
+    "Via[0-1]_800:400_um-kicad_default" "Via[0-1]_800:400_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_800:400_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_800:400_um-kicad_default"
+  )
+  (class default
+    "Net-(C1-Pad1)" /Atmega32/GND "Net-(C2-Pad1)" "/Power Supply/3.3V" /Atmega32/5V "Net-(DS1-Pad5)" "Net-(DS1-Pad6)" "Net-(DS1-Pad8)"
+    "unconnected-(DS1-Pad9)" "unconnected-(DS1-Pad10)" "unconnected-(DS1-Pad11)" "unconnected-(DS1-Pad12)" "Net-(DS1-Pad13)" "Net-(DS1-Pad14)" "Net-(DS1-Pad15)" "Net-(DS1-Pad16)"
+    "/Power Supply/12V" /Atmega32/A0 "unconnected-(J2-Pad3)" "unconnected-(J2-Pad4)" /Atmega32/A1 /Atmega32/A2 "unconnected-(J3-Pad4)" /Atmega32/SCL
+    /Atmega32/SDA /Atmega32/D2 /Atmega32/D3 "unconnected-(U1-Pad1)" /Atmega32/CE /Atmega32/IRQ "unconnected-(U1-Pad4)" /Atmega32/CSN
+    /Atmega32/MOSI /Atmega32/MISO /Atmega32/SCK "unconnected-(U1-Pad14)" "unconnected-(U1-Pad15)" "unconnected-(U1-Pad18)" "unconnected-(U1-Pad19)" "unconnected-(U1-Pad20)"
+    "unconnected-(U1-Pad21)" "unconnected-(U1-Pad24)" "unconnected-(U1-Pad25)" "unconnected-(U1-Pad26)" "unconnected-(U1-Pad27)" "unconnected-(U1-Pad28)" "unconnected-(U1-Pad29)" "unconnected-(U1-Pad33)"
+    "unconnected-(U1-Pad34)" "unconnected-(U1-Pad35)" "unconnected-(U1-Pad36)" "unconnected-(U1-Pad37)" "Net-(U2-Pad3)" "unconnected-(U5-Pad6)" "unconnected-(U5-Pad7)" "unconnected-(U5-Pad13)"
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    (clearance_class "kicad_default")
+    (via_rule kicad_default)
+    (rule
+      (width 250.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)
