@@ -119,11 +119,6 @@ unsigned long time_us();
 int digital_write(Pin pin, int level);
 int digital_read(Pin pin);
 
-// ADC
-void ADC_int(void);
-int ADC_read(Pin pin);
-int ADC_read_full(Pin pin);
-
 // Display
 void LCD_init();
 void LCD_msg(char *c);
