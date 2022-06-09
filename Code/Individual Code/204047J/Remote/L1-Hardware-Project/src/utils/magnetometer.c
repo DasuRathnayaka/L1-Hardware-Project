@@ -36,4 +36,8 @@ int Magneto_GetHeading()
 	if (Heading<0)		/* Check for sign */
 	Heading = Heading + 2*PI;
 	return (Heading* 180 / PI);/* Convert into angle and return */
+<<<<<<< HEAD:Code/Master/L1-Hardware-Project/src/utils/magnetometer.c
 }
+=======
+}
+>>>>>>> dev:Code/Individual Code/204047J/Remote/L1-Hardware-Project/src/utils/magnetometer.c
