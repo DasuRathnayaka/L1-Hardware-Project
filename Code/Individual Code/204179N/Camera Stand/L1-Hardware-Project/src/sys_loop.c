@@ -15,5 +15,5 @@ void sys_loop(void) {
 	uint8_t cam_angle, right, forward, siren, auto_mode;
 	
 	// Get values from nRF
-	nrf_rx_data(&cam_angle, &right, &forward, &siren, &auto_mode);
+	//nrf_rx_data(&cam_angle, &right, &forward, &siren, &auto_mode);
 }

@@ -47,4 +47,15 @@ void sys_init(void) {
 	char latitude[20];
 	key_string(latitude, 20);
 	destination.latitude = strtod(latitude, temp);
+	
+	
+	LCD_clear();
+	LCD_msg("Lon: ");
+	LCD_msg(longitude);
+
+	LCD_line_2();
+
+	LCD_msg("Lat: ");
+	LCD_msg(latitude);
+	_delay_ms(2000);
 }

@@ -9,17 +9,12 @@
 
 
 void joystick_init(void) {
-	pin_mode(A0, INPUT);	// Up / Down
+	
 	pin_mode(A1, INPUT);	// Left / Right
 	pin_mode(A2, INPUT);	// Forward / Backward
 }
 
-/* 
- * Get angle for camera
- */
-uint8_t get_joystick_up_down() {
-	return ADC_read(A0);
-}
+
 
 /* 
  * Get turn
