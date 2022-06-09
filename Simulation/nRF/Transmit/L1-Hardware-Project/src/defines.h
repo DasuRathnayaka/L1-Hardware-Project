@@ -18,6 +18,13 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "utils/nRF24L01/spi_config.h"
+#include "utils/nRF24L01/avr_spi.h"
+#include "utils/nRF24L01/nrf24l01_reg.h"
+#include "utils/nRF24L01/nrf24l01_config.h"
+#include "utils/nRF24L01/nrf24l01.h"
+
+
 typedef struct Pin {
 	uint8_t pin;
 	char port;
@@ -57,16 +64,6 @@ Coordinate destination;
 
 int timer0_overflow; // Overflow for Timer 1
 
-unsigned long ultrazonic_pulse;
-
-#define PI 3.142857
-#define RATE 250					//Rate of scrolling.
-void WaitMs(unsigned int ms);		//Declaration of delay routine used.
-void usart_init();
-unsigned int usart_getch();
-char value,lati_value[15],lati_dir, longi_value[15], longi_dir;
-char* tempValue;
-char output[100];
 
 const Pin A0;
 const Pin A1;
@@ -124,6 +121,12 @@ void ADC_int(void);
 int ADC_read(Pin pin);
 int ADC_read_full(Pin pin);
 
+// UART
+void UART_init(long USART_BAUDRATE);
+unsigned char UART_RxChar();
+void UART_TxChar(char ch);
+void UART_SendString(char *str);
+
 // Display
 void LCD_init();
 void LCD_msg(char *c);
@@ -134,11 +137,23 @@ void LCD_line_2();
 void LCD_num(double num);
 void LCD_char(char c);
 
-// UART
-void UART_init(long USART_BAUDRATE);
-unsigned char UART_RxChar();
-void UART_TxChar(char ch);
-void UART_SendString(char *str);
+// Keypad
+char key_char();
+void key_string(char buffer[], int buff);
+
+// SPI
+const Pin SLAVE_SS_0;
+const Pin MOSI;
+const Pin MISO;
+const Pin SCK;
+void SPI_master_init();
+void SPI_slave_init();
+void SPI_select_slave(Pin SS);
+void SPI_deselect_slave(Pin SS);
+unsigned char SPI_tranceiver(unsigned char data);
+int SPI_check_available();
+unsigned char SPI_read();
+void SPI_write(unsigned char data);
 
 // I2C
 void I2C_master_init();
@@ -151,16 +166,5 @@ void I2C_listen(void);
 unsigned char I2C_read();
 void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
-
-//GPS module
-void GPS_init();
-char* get_lati_str();
-char* get_longi_str();
-float get_lati_float();
-float get_longi_float();
-int angle_from_north(float lati_input, float longi_input);
-char* itoa(int num, char* buffer, int base);
-void Double2String(char *output,double val,int n);
-char c[15];
 
 #endif

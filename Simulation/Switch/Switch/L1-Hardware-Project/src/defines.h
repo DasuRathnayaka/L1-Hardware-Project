@@ -2,7 +2,7 @@
  * pins.h
  *
  * Created: 10/19/2021 2:04:21 PM
- * 
+ *  
  */ 
 
 #ifndef DEFINES_H
@@ -15,18 +15,15 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
+
 
 typedef struct Pin {
 	uint8_t pin;
 	char port;
 } Pin;
-
-typedef struct Coordinate {
-	double longitude;
-	double latitude;
-} Coordinate;
 
 #define INPUT 0
 #define OUTPUT 1
@@ -40,33 +37,8 @@ typedef struct Coordinate {
 #define READ 1
 #define WRITE 0
 
-//GPS related
-#define Buffer_Size 150
-#define degrees_buffer_size 20
+unsigned long timer0_overflow;
 
-// Mode
-typedef enum {
-	UP_DOWN = 0,
-	LEFT_RIGHT,
-	FORW_BACKW,
-	SIREN,
-	MODE
-} uint8_mode;
-
-Coordinate destination;
-
-int timer0_overflow; // Overflow for Timer 1
-
-unsigned long ultrazonic_pulse;
-
-#define PI 3.142857
-#define RATE 250					//Rate of scrolling.
-void WaitMs(unsigned int ms);		//Declaration of delay routine used.
-void usart_init();
-unsigned int usart_getch();
-char value,lati_value[15],lati_dir, longi_value[15], longi_dir;
-char* tempValue;
-char output[100];
 
 const Pin A0;
 const Pin A1;
@@ -119,11 +91,6 @@ unsigned long time_us();
 int digital_write(Pin pin, int level);
 int digital_read(Pin pin);
 
-// ADC
-void ADC_int(void);
-int ADC_read(Pin pin);
-int ADC_read_full(Pin pin);
-
 // Display
 void LCD_init();
 void LCD_msg(char *c);
@@ -131,14 +98,6 @@ void LCD_clear_msg(char* c);
 void LCD_clear();
 void LCD_line_1();
 void LCD_line_2();
-void LCD_num(double num);
-void LCD_char(char c);
-
-// UART
-void UART_init(long USART_BAUDRATE);
-unsigned char UART_RxChar();
-void UART_TxChar(char ch);
-void UART_SendString(char *str);
 
 // I2C
 void I2C_master_init();
@@ -152,15 +111,9 @@ unsigned char I2C_read();
 void I2C_slave_read_buffer(char* buffer, int length);
 void I2C_master_write_buffer(unsigned char address, char* buffer, int length);
 
-//GPS module
-void GPS_init();
-char* get_lati_str();
-char* get_longi_str();
-float get_lati_float();
-float get_longi_float();
-int angle_from_north(float lati_input, float longi_input);
-char* itoa(int num, char* buffer, int base);
-void Double2String(char *output,double val,int n);
-char c[15];
+// Button
+void btn_init(void);
+uint8_t btn_mode();
+uint8_t btn_siren();
 
 #endif
