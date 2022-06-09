@@ -116,6 +116,17 @@ unsigned long time_us();
 int digital_write(Pin pin, int level);
 int digital_read(Pin pin);
 
+// ADC
+void ADC_int(void);
+int ADC_read(Pin pin);
+int ADC_read_full(Pin pin);
+
+// UART
+void UART_init(long USART_BAUDRATE);
+unsigned char UART_RxChar();
+void UART_TxChar(char ch);
+void UART_SendString(char *str);
+
 // Display
 void LCD_init();
 void LCD_msg(char *c);
