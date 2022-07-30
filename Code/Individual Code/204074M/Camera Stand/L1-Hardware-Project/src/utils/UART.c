@@ -11,7 +11,6 @@
 
 /*
 	To initialize the USART connection between two components
-	=========================================================
 	
 	UCSRB register the most used bits are the RXEN and TXEN
 	UCSRC and the UBRRH share same address. To select the UCSRC we have to give 1 to URSEL else it will write in UBRRH register (because default value is 0).
@@ -27,7 +26,6 @@ void UART_init(long USART_BAUDRATE)
 
 /*
 	To receive data 
-	===============
 */
 unsigned char UART_RxChar() {
 	while ((UCSRA & (1 << RXC)) == 0);/* Wait till data is received */
@@ -36,7 +34,6 @@ unsigned char UART_RxChar() {
 
 /*
 	To Transmit data
-	=================
 */
 void UART_TxChar(char ch)
 {
@@ -45,8 +42,7 @@ void UART_TxChar(char ch)
 }
 
 /*
-	To send String data
-	===================
+	To send String data from Atmega
 */
 void UART_SendString(char *str)
 {
