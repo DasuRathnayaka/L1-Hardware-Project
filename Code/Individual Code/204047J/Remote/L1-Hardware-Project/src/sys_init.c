@@ -21,7 +21,7 @@ void sys_init(void) {
 	SPI_master_init();
 
 
-	nrf_init(NRF_MODE_PTX, NRF_TX_PLOAD);
+	//nrf_init(NRF_MODE_PTX, NRF_TX_PLOAD);
 
 	joystick_init();
 

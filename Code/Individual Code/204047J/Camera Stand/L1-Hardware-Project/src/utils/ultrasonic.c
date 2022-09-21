@@ -89,37 +89,37 @@ int ultrazonic_error() {
 	digital_write(mux2, LOW);
 	double back = ultrazonic_distance();
 	
-// 	char string[16];
-// 	LCD_clear();
-// 	LCD_line_1();
-// 	
-// 	dtostrf(left, 2, 2, string);/* distance to string */
-// 	strcat(string, " cm   ");	/* Concat unit i.e.cm */
-// 	LCD_msg("1. ");
-// 	LCD_msg(string);
-// 	
-// 	dtostrf(right, 2, 2, string);/* distance to string */
-// 	strcat(string, " cm");	/* Concat unit i.e.cm */
-// 	LCD_line_2();
-// 	LCD_msg("2. ");
-// 	LCD_msg(string);
-// 	_delay_ms(1000);
-// 	
-// 	LCD_clear();
-// 	LCD_line_1();
-// 	
-// 	dtostrf(front, 2, 2, string);/* distance to string */
-// 	strcat(string, " cm   ");	/* Concat unit i.e.cm */
-// 	LCD_msg("3. ");
-// 	LCD_msg(string);
-// 	
-// 	dtostrf(back, 2, 2, string);/* distance to string */
-// 	strcat(string, " cm");	/* Concat unit i.e.cm */
-// 	LCD_line_2();
-// 	LCD_msg("4. ");
-// 	LCD_msg(string);
-// 	_delay_ms(200);
-// 	_delay_ms(1000);
+	char string[16];
+	LCD_clear();
+	LCD_line_1();
+	
+	dtostrf(left, 2, 2, string);/* distance to string */
+	strcat(string, " cm   ");	/* Concat unit i.e.cm */
+	LCD_msg("1. ");
+	LCD_msg(string);
+	
+	dtostrf(right, 2, 2, string);/* distance to string */
+	strcat(string, " cm");	/* Concat unit i.e.cm */
+	LCD_line_2();
+	LCD_msg("2. ");
+	LCD_msg(string);
+	_delay_ms(1000);
+	
+	LCD_clear();
+	LCD_line_1();
+	
+	dtostrf(front, 2, 2, string);/* distance to string */
+	strcat(string, " cm   ");	/* Concat unit i.e.cm */
+	LCD_msg("3. ");
+	LCD_msg(string);
+	
+	dtostrf(back, 2, 2, string);/* distance to string */
+	strcat(string, " cm");	/* Concat unit i.e.cm */
+	LCD_line_2();
+	LCD_msg("4. ");
+	LCD_msg(string);
+	_delay_ms(200);
+	_delay_ms(1000);
 	
 	digital_write(mux1, LOW);
 	digital_write(mux2, LOW);
